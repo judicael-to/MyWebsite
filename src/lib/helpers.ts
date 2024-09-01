@@ -1,6 +1,6 @@
 export const getTimeUntilSeptember12024 = () => {
 	// Define the target date
-	const targetDate = new Date('2024-09-01T00:00:00').getTime();
+	const targetDate = new Date('2024-12-23T00:00:00').getTime();
 
 	// Get the current date and time
 	const currentDate = new Date().getTime();
@@ -19,7 +19,7 @@ export const getTimeUntilSeptember12024 = () => {
 	const seconds = Math.floor((differenceInMilliseconds % (1000 * 60)) / 1000);
 
 	// Return the result
-	return `${days}days ${hours}hours ${minutes}min ${seconds}sec`;
+	return `${days}days ${hours}h ${minutes}min ${seconds}sec`;
 };
 
 export function formatDate(date: Date): string {
