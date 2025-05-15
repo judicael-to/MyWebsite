@@ -32,7 +32,7 @@ const image =
     <link rel="preconnect" href="https://cdn.fontshare.com" />
   </head>
   <body
-    class="bg-lightblue-100 md:h-screen flex flex-col justify-center items-center"
+    class="md:h-screen flex flex-col justify-center items-center transition-all duration-300"
   >
     <slot name="loader" />
     <slot />
@@ -61,6 +61,12 @@ const image =
     margin: 0;
     font-family: "Satoshi", sans-serif;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--background);
+    transition: background-color 0.3s ease;
+  }
+
+  html.light body {
+    background-color: var(--background);
   }
 
   h1,

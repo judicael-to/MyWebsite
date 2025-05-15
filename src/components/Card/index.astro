@@ -9,15 +9,17 @@ interface Props {
   rowSpan?: string;
   href?: string;
   colorText?: string;
+  gradient?: number;
 }
 
-const { title, body, colSpan, rowSpan, href, colorText } = Astro.props;
+const { title, body, colSpan, rowSpan, href, colorText, gradient = 1 } = Astro.props;
 ---
 
 <div
   class={`card group overflow-hidden transfor-y-[-40%] bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100 hover:border-primary-500 align-start flex-none justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 h-auto ${
     colSpan || "md:col-span-2"
   } ${rowSpan || ""}`}
+  data-gradient={gradient}
 >
   {
     href ? (
@@ -37,3 +39,59 @@ const { title, body, colSpan, rowSpan, href, colorText } = Astro.props;
     )
   }
 </div>
+
+<style>
+  .body {
+    background-color: var(--background);
+  }
+
+  .card {
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    box-shadow: 0 0 12px var(--shadow-color);
+    transition: all 0.3s ease;
+  }
+  
+    .card[data-gradient="1"] {
+    background: var(--card-gradient-1);
+  }
+
+  .card[data-gradient="2"] {
+    background: var(--card-gradient-2);
+  }
+  
+  .card[data-gradient="3"] {
+    background: var(--card-gradient-3);
+  }
+  
+  .card[data-gradient="4"] {
+    background: var(--card-gradient-4);
+  }
+
+  .card[data-gradient="5"] {
+    background: var(--card-gradient-5);
+  }
+
+  .card[data-gradient="6"] {
+    background: var(--card-gradient-6);
+  }
+
+  .card[data-gradient="7"] {
+    background: var(--card-gradient-7);
+  }
+
+  .card[data-gradient="8"] {
+    background: var(--card-gradient-8);
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px var(--shadow-color);
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+</style>

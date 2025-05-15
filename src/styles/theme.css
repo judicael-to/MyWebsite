@@ -1,0 +1,41 @@
+:root {
+  /* Dark theme colors (default) */
+  --background: #171717;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --shadow-color: rgba(157, 72, 254, 0.5);
+  
+  /* Card gradients for dark theme */
+  --card-gradient-1: rgb(120, 0, 255);
+  --card-gradient-2: rgb(157, 72, 254);
+  --card-gradient-3: rgb(92, 0, 198);
+  --card-gradient-4: rgb(65, 0, 138);
+  --card-gradient-5: rgb(51, 0, 109);
+  --card-gradient-6: rgb(39, 0, 83);
+  --card-gradient-7: rgb(23, 0, 49);
+  --card-gradient-8: rgb(0, 0, 0);
+  
+  --border-color: rgba(255, 255, 255, 0.1);
+  --primary-color: #E63946;
+}
+
+:root.light {
+  /* Light theme colors */
+  --background: #fbe3d0;
+  --text-primary: #171717;
+  --text-secondary: #525252;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  
+  /* Card gradients for light theme */
+  --card-gradient-1: #D1F8EF;
+  --card-gradient-2: #A1E3F9;
+  --card-gradient-3: #81abd8;
+  --card-gradient-4: #3674B5;
+  --card-gradient-5: #3674B5;
+  --card-gradient-6: #a05a9e;
+  --card-gradient-7: #3674B5;
+  --card-gradient-8: #486bad;
+  
+  --border-color: rgba(0, 0, 0, 0.1);
+  --primary-color: #E63946;
+} 

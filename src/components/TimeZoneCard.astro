@@ -28,11 +28,11 @@ import Card from "./Card/index.astro";
   });
 </script>
 
-<Card colSpan="lg:col-span-2" rowSpan="md:row-span-2" title="Time before my birthday :">
+<Card colSpan="lg:col-span-2" rowSpan="md:row-span-2" title="Time before my birthday :" gradient={5}>
   <time
     datetime=""
     id="timeDisplay"
-    class="text-xl xl:text-3xl xl:whitespace-nowrap w-full h-full font-serif flex items-center justify-center max-h-[100px]"
+    class="text-xl xl:text-3xl xl:whitespace-nowrap w-full h-full font-serif flex items-center justify-center max-h-[100px] pb-4 md:pb-0"
   >
     {getTimeUntilMay23()}
   </time>

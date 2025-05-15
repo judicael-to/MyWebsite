@@ -1,0 +1,86 @@
+---
+import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-2" gradient={2}>
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-2">
+      <button id="themeToggle" class="w-fit flex items-center gap-2 px-4 py-2 rounded-xl bg-darkslate-600 hover:bg-darkslate-500 transition-colors">
+        <Icon name="ri:sun-line" class="h-5 theme-toggle-light"/>
+        <Icon name="ri:moon-line" class="h-5 theme-toggle-dark"/>
+        <span class="theme-text">Dark</span>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <div class="flex gap-2">
+        <button class="language-btn px-4 py-2 rounded-xl bg-darkslate-600 hover:bg-darkslate-500 transition-colors" data-lang="en">English</button>
+        <button class="language-btn px-4 py-2 rounded-xl bg-darkslate-600 hover:bg-darkslate-500 transition-colors" data-lang="fr">Français</button>
+      </div>
+    </div>
+  </div>
+</Card>
+
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+  const themeText = document.querySelector('.theme-text');
+  
+  // Check for saved theme preference, otherwise use system preference
+  const getPreferredTheme = (): 'light' | 'dark' => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme;
+    }
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  };
+
+  // Function to set theme
+  const setTheme = (theme: 'light' | 'dark') => {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+      if (themeText) themeText.textContent = 'Light';
+    } else {
+      document.documentElement.classList.remove('light');
+      if (themeText) themeText.textContent = 'Dark';
+    }
+    localStorage.setItem('theme', theme);
+  };
+
+  // Initialize theme
+  setTheme(getPreferredTheme());
+
+  // Handle theme toggle
+  themeToggle?.addEventListener('click', () => {
+    const isLight = document.documentElement.classList.contains('light');
+    setTheme(isLight ? 'dark' : 'light');
+  });
+
+  // Handle system theme changes
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+    setTheme(e.matches ? 'light' : 'dark');
+  });
+
+  // Language selection
+  const languageBtns = document.querySelectorAll('.language-btn');
+  languageBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      languageBtns.forEach(b => b.classList.remove('bg-primary-500'));
+      btn.classList.add('bg-primary-500');
+      const lang = btn.getAttribute('data-lang');
+      // Add your language change logic here
+    });
+  });
+</script>
+
+<style>
+  :root.light .theme-toggle-light {
+    display: none;
+  }
+  :root:not(.light) .theme-toggle-dark {
+    display: none;
+  }
+  .language-btn.active {
+    background-color: var(--primary-500);
+  }
+</style>
