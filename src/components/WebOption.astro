@@ -4,19 +4,22 @@ import { Icon } from "astro-icon/components";
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-2" gradient={2}>
-  <div class="flex flex-col gap-6">
-    <div class="flex flex-col gap-2">
-      <button id="themeToggle" class="w-fit flex items-center gap-2 px-4 py-2 rounded-xl bg-darkslate-600 hover:bg-darkslate-500 transition-colors">
-        <Icon name="ri:sun-line" class="h-5 theme-toggle-light"/>
-        <Icon name="ri:moon-line" class="h-5 theme-toggle-dark"/>
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col justify-center items-center">
+
+      <button id="themeToggle" class="w-fit flex items-center px-4 py-2">
+        <Icon name="ri:moon-line" class="h-5 theme-toggle-light"/>
+        <Icon name="ri:sun-line" class="h-5 theme-toggle-dark"/>
         <span class="theme-text">Dark</span>
       </button>
     </div>
 
-    <div class="flex flex-col gap-2">
-      <div class="flex gap-2">
-        <button class="language-btn px-4 py-2 rounded-xl bg-darkslate-600 hover:bg-darkslate-500 transition-colors" data-lang="en">English</button>
-        <button class="language-btn px-4 py-2 rounded-xl bg-darkslate-600 hover:bg-darkslate-500 transition-colors" data-lang="fr">Français</button>
+    <div class="w-full h-[1px] bg-gray-500/20"></div>
+
+    <div class="flex flex-col justify-center items-center">
+      <div class="flex gap-6">
+        <button data-lang="en">English</button>
+        <button data-lang="fr">Français</button>
       </div>
     </div>
   </div>
@@ -81,6 +84,6 @@ import { Icon } from "astro-icon/components";
     display: none;
   }
   .language-btn.active {
-    background-color: var(--primary-500);
+    background-color: var(--button-hover);
   }
 </style>
