@@ -1,12 +1,18 @@
-export const getTimeUntilSeptember12024 = () => {
-	// Define the target date
-	const targetDate = new Date('2024-12-23T00:00:00').getTime();
-
-	// Get the current date and time
-	const currentDate = new Date().getTime();
+export const getTimeUntilMay23 = () => {
+	// Get current date
+	const now = new Date();
+	const currentYear = now.getFullYear();
+	
+	// Create this year's birthday date
+	let targetDate = new Date(currentYear, 4, 23); // Month is 0-based, so 4 = May
+	
+	// If this year's birthday has passed, use next year's date
+	if (now > targetDate) {
+		targetDate = new Date(currentYear + 1, 4, 23);
+	}
 
 	// Calculate the difference in milliseconds
-	const differenceInMilliseconds = targetDate - currentDate;
+	const differenceInMilliseconds = targetDate.getTime() - now.getTime();
 
 	// Convert milliseconds to days, hours, minutes, and seconds
 	const days = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
