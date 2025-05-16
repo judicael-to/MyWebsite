@@ -4,6 +4,9 @@ import Button from "./Button.astro";
 import { LINKS } from "../lib/constants";
 import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
+import { getTranslation } from "../lib/i18n/translations";
+
+const currentLang = Astro.cookies.get('language')?.value || 'en';
 ---
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" gradient={1}>
@@ -12,7 +15,7 @@ import Tooltip from "./Tooltip/index";
       <div class="flex flex-col h-full">
         <h6 class="text-sm font-light m-0 text-secondary">welcome</h6>
         <p class="m-0 font-light text-xl text-primary">
-          Hi, I'm <b class="font-bold">Judicael TO</b>, a computer science student from the university of Saclay with strong <b class="font-bold">interest in data and machine learning.</b>
+          {getTranslation('intro.description', currentLang)}
         </p>
       </div>
       <div class="flex gap-4">
@@ -57,3 +60,21 @@ import Tooltip from "./Tooltip/index";
     color: var(--text-primary);
   }
 </style>
+
+<script>
+  import { getTranslation } from "../lib/i18n/translations";
+
+  // Get all elements that need translation
+  const greeting = document.querySelector('h1');
+  const role = document.querySelector('h2');
+  const description = document.querySelector('p');
+
+  // Update translations when language changes
+  window.addEventListener('languagechange', (event) => {
+    const lang = (event as CustomEvent).detail.language;
+    
+    if (greeting) greeting.textContent = getTranslation('intro.greeting', lang);
+    if (role) role.textContent = getTranslation('intro.role', lang);
+    if (description) description.textContent = getTranslation('intro.description', lang);
+  });
+</script>

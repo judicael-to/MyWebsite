@@ -1,6 +1,9 @@
 ---
 import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
+import { getTranslation } from "../lib/i18n/translations";
+
+const currentLang = Astro.cookies.get('language')?.value || 'en';
 ---
 
 <Card colSpan="md:col-span-2" rowSpan="md:row-span-2" gradient={4}>
@@ -8,17 +11,17 @@ import { LINKS } from "../lib/constants";
     <div>
       <header class="flex items-center">
         <h1 class="text-white text-xl font-bold">
-          Let's talk together!
+          {getTranslation('contact.title', currentLang)}
         </h1>
       </header>
       <address class="flex flex-col mt-4">
-        <h2 class="text-gray-500">Contact Details</h2>
+        <h2 class="text-secondary">{getTranslation('contact.details', currentLang)}</h2>
         <p>judicaelto@protonmail.com</p>
       </address>
     </div>
-    <div class="hidden md:block w-[2px] h-[80%] bg-gray-500/20"></div>
+    <div class="background-secondary hidden md:block w-[1px] h-[80%]"></div>
     <div class="flex flex-col">
-      <h2 class="text-gray-500">Socials</h2>
+      <h2 class="text-secondary">{getTranslation('contact.socials', currentLang)}</h2>
       <ul>
         <li>
           <a href={LINKS.github} target="_blank">Github</a>
@@ -33,3 +36,30 @@ import { LINKS } from "../lib/constants";
     </div>
   </div>
 </Card>
+
+<script>
+  import { getTranslation } from "../lib/i18n/translations";
+
+  // Get all elements that need translation
+  const title = document.querySelector('h1');
+  const detailsHeading = document.querySelector('h2:first-of-type');
+  const socialsHeading = document.querySelector('h2:last-of-type');
+
+  // Update translations when language changes
+  window.addEventListener('languagechange', (event) => {
+    const lang = (event as CustomEvent).detail.language;
+    
+    if (title) title.textContent = getTranslation('contact.title', lang);
+    if (detailsHeading) detailsHeading.textContent = getTranslation('contact.details', lang);
+    if (socialsHeading) socialsHeading.textContent = getTranslation('contact.socials', lang);
+  });
+</script>
+
+<style>
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+  .background-secondary {
+    background-color: var(--background-secondary);
+  }
+</style>

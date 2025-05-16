@@ -1,8 +1,11 @@
 ---
 import Card from "./Card/index.astro";
+import { getTranslation } from "../lib/i18n/translations";
+
+const currentLang = Astro.cookies.get('language')?.value || 'en';
 ---
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-4" title="About me" gradient={3}>
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-4" title={getTranslation('info.title', currentLang)} gradient={3}>
   <div class="flex flex-col gap-2">
     <p class="text-sm font-light">
       My primary tools:
@@ -23,3 +26,17 @@ import Card from "./Card/index.astro";
     </ul>
   </div>
 </Card>
+
+<script>
+  import { getTranslation } from "../lib/i18n/translations";
+
+  // Get all elements that need translation
+  const title = document.querySelector('h1');
+
+  // Update translations when language changes
+  window.addEventListener('languagechange', (event) => {
+    const lang = (event as CustomEvent).detail.language;
+    
+    if (title) title.textContent = getTranslation('info.title', lang);
+  });
+</script>
