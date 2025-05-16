@@ -1,5 +1,6 @@
 ---
 import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
 import { getTranslation } from "../lib/i18n/translations";
 
 const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
@@ -12,11 +13,17 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
     </h1>
     <p class="text-sm font-light">
       <span class="about-tools">{getTranslation('about.tools', currentLang)}</span> :
-      <ul class="list-disc list-inside">
-        <li>Python</li>
-        <li>Java</li>
-        <li>C</li>
-      </ul>
+      <div class="flex flex-wrap gap-2 mt-2">
+        <span class="tool-box">
+          <Icon name="simple-icons:python" class="inline-block w-4 h-4" />
+        </span>
+        <span class="tool-box">
+          <Icon name="simple-icons:c" class="inline-block w-4 h-4" />
+        </span>
+        <span class="tool-box">
+          <Icon name="simple-icons:postgresql" class="inline-block w-4 h-4" />
+        </span>
+      </div>
     </p>
     <p class="text-sm font-light">
       <span class="about-passions">{getTranslation('about.passions', currentLang)}</span> :
@@ -29,6 +36,30 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
     </ul>
   </div>
 </Card>
+
+<style>
+  .tool-box {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--button-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    font-size: 0.875rem;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .tool-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 var(--shadow-color);
+  }
+
+  .tool-box:hover :global(svg) {
+    color: var(--shadow-color);
+  }
+</style>
 
 <script>
   import { getTranslation } from "../lib/i18n/translations";

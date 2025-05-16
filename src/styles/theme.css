@@ -5,9 +5,9 @@
   --background-third: #262626;
   --text-primary: #ffffff;
   --text-secondary: #797979;
-  --shadow-color: rgba(164, 84, 255, 0.5);
+  --shadow-color: rgba(194, 141, 255, 0.5);
   --button-bg: #171717;
-  --button-hover: #262626;
+  --button-hover: #27236d;
   
   /* Card gradients for dark theme */
   --card-gradient-1: rgb(94, 0, 201);
