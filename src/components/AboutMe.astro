@@ -2,13 +2,16 @@
 import Card from "./Card/index.astro";
 import { getTranslation } from "../lib/i18n/translations";
 
-const currentLang = Astro.cookies.get('language')?.value || 'en';
+const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
 ---
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-4" title={getTranslation('info.title', currentLang)} gradient={3}>
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-4" gradient={3}>
   <div class="flex flex-col gap-2">
+    <h1 class="about-title text-xl font-bold">
+      {getTranslation('about.title', currentLang)}
+    </h1>
     <p class="text-sm font-light">
-      My primary tools:
+      <span class="about-tools">{getTranslation('about.tools', currentLang)}</span> :
       <ul class="list-disc list-inside">
         <li>Python</li>
         <li>Java</li>
@@ -16,13 +19,13 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
       </ul>
     </p>
     <p class="text-sm font-light">
-      My passions :
+      <span class="about-passions">{getTranslation('about.passions', currentLang)}</span> :
     </p>
     <ul class="list-disc list-inside">
-      <li>coding</li>
-      <li>design</li>
-      <li>tennis</li>
-      <li>music</li>
+      <li class="about-passions-coding">{getTranslation('about.passions.coding', currentLang)}</li>
+      <li class="about-passions-design">{getTranslation('about.passions.design', currentLang)}</li>
+      <li class="about-passions-tennis">{getTranslation('about.passions.tennis', currentLang)}</li>
+      <li class="about-passions-music">{getTranslation('about.passions.music', currentLang)}</li>
     </ul>
   </div>
 </Card>
@@ -30,13 +33,47 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
 <script>
   import { getTranslation } from "../lib/i18n/translations";
 
-  // Get all elements that need translation
-  const title = document.querySelector('h1');
+  function updateTranslations(lang: string) {
+    // Get all elements using specific classes
+    const title = document.querySelector('.about-title');
+    const tools = document.querySelector('.about-tools');
+    const passions = document.querySelector('.about-passions');
+    
+    // Passions list items
+    const passionsCoding = document.querySelector('.about-passions-coding');
+    const passionsDesign = document.querySelector('.about-passions-design');
+    const passionsTennis = document.querySelector('.about-passions-tennis');
+    const passionsMusic = document.querySelector('.about-passions-music');
+
+    try {
+      if (title) title.textContent = getTranslation('about.title', lang);
+      if (tools) tools.textContent = getTranslation('about.tools', lang);
+      if (passions) passions.textContent = getTranslation('about.passions', lang);
+      
+      // Update passions
+      if (passionsCoding) passionsCoding.textContent = getTranslation('about.passions.coding', lang);
+      if (passionsDesign) passionsDesign.textContent = getTranslation('about.passions.design', lang);
+      if (passionsTennis) passionsTennis.textContent = getTranslation('about.passions.tennis', lang);
+      if (passionsMusic) passionsMusic.textContent = getTranslation('about.passions.music', lang);
+    } catch (error) {
+      console.error('Error updating AboutMe translations:', error);
+    }
+  }
+
+  // Initialize translations as soon as possible
+  updateTranslations(document.documentElement.lang || localStorage.getItem('language') || 'fr');
 
   // Update translations when language changes
   window.addEventListener('languagechange', (event) => {
     const lang = (event as CustomEvent).detail.language;
-    
-    if (title) title.textContent = getTranslation('info.title', lang);
+    console.log('AboutMe received language change event:', lang);
+    updateTranslations(lang);
+  });
+
+  // Also update translations when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'fr';
+    console.log('AboutMe DOM loaded, updating with language:', currentLang);
+    updateTranslations(currentLang);
   });
 </script>

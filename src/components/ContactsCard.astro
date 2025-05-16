@@ -10,18 +10,18 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
   <div class="h-full md:flex flex-row justify-around items-center relative">
     <div>
       <header class="flex items-center">
-        <h1 class="text-white text-xl font-bold">
+        <h1 class="contact-title text-white text-xl font-bold">
           {getTranslation('contact.title', currentLang)}
         </h1>
       </header>
       <address class="flex flex-col mt-4">
-        <h2 class="text-secondary">{getTranslation('contact.details', currentLang)}</h2>
+        <h2 class="contact-details text-secondary">{getTranslation('contact.details', currentLang)}</h2>
         <p>judicaelto@protonmail.com</p>
       </address>
     </div>
     <div class="background-secondary hidden md:block w-[1px] h-[80%]"></div>
     <div class="flex flex-col">
-      <h2 class="text-secondary">{getTranslation('contact.socials', currentLang)}</h2>
+      <h2 class="contact-socials text-secondary">{getTranslation('contact.socials', currentLang)}</h2>
       <ul>
         <li>
           <a href={LINKS.github} target="_blank">Github</a>
@@ -40,18 +40,43 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
 <script>
   import { getTranslation } from "../lib/i18n/translations";
 
-  // Get all elements that need translation
-  const title = document.querySelector('h1');
-  const detailsHeading = document.querySelector('h2:first-of-type');
-  const socialsHeading = document.querySelector('h2:last-of-type');
+  function updateTranslations(lang: string) {
+    // Get all elements that need translation using specific class selectors
+    const title = document.querySelector('.contact-title');
+    const detailsHeading = document.querySelector('.contact-details');
+    const socialsHeading = document.querySelector('.contact-socials');
+
+    console.log('Updating contact translations to:', lang);
+    console.log('Found elements:', { 
+      title: !!title, 
+      detailsHeading: !!detailsHeading, 
+      socialsHeading: !!socialsHeading 
+    });
+
+    if (title) {
+      title.textContent = getTranslation('contact.title', lang);
+      console.log('Updated title:', getTranslation('contact.title', lang));
+    }
+    if (detailsHeading) {
+      detailsHeading.textContent = getTranslation('contact.details', lang);
+      console.log('Updated details:', getTranslation('contact.details', lang));
+    }
+    if (socialsHeading) {
+      socialsHeading.textContent = getTranslation('contact.socials', lang);
+      console.log('Updated socials:', getTranslation('contact.socials', lang));
+    }
+  }
 
   // Update translations when language changes
   window.addEventListener('languagechange', (event) => {
     const lang = (event as CustomEvent).detail.language;
-    
-    if (title) title.textContent = getTranslation('contact.title', lang);
-    if (detailsHeading) detailsHeading.textContent = getTranslation('contact.details', lang);
-    if (socialsHeading) socialsHeading.textContent = getTranslation('contact.socials', lang);
+    updateTranslations(lang);
+  });
+
+  // Also update translations when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = document.documentElement.lang || 'en';
+    updateTranslations(currentLang);
   });
 </script>
 

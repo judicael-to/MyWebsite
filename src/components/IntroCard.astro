@@ -6,15 +6,23 @@ import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
 import { getTranslation } from "../lib/i18n/translations";
 
-const currentLang = Astro.cookies.get('language')?.value || 'en';
+const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'en';
 ---
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" gradient={1}>
   <div class="flex w-full h-full">
     <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
       <div class="flex flex-col h-full">
-        <h6 class="text-sm font-light m-0 text-secondary">welcome</h6>
-        <p class="m-0 font-light text-xl text-primary">
+        <div class="flex flex-col gap-2">
+          <h6 class="text-sm font-light m-0 text-secondary">welcome</h6>
+          <h1 class="intro-greeting text-3xl font-bold text-primary m-0">
+            {getTranslation('intro.greeting', currentLang)}
+          </h1>
+          <h2 class="intro-role text-xl text-secondary m-0">
+            {getTranslation('intro.role', currentLang)}
+          </h2>
+        </div>
+        <p class="intro-description m-0 font-light text-xl text-primary mt-4">
           {getTranslation('intro.description', currentLang)}
         </p>
       </div>
@@ -64,17 +72,54 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
 <script>
   import { getTranslation } from "../lib/i18n/translations";
 
-  // Get all elements that need translation
-  const greeting = document.querySelector('h1');
-  const role = document.querySelector('h2');
-  const description = document.querySelector('p');
+  function updateTranslations(lang: string) {
+    // Get all elements that need translation using specific class selectors
+    const greeting = document.querySelector('.intro-greeting');
+    const role = document.querySelector('.intro-role');
+    const description = document.querySelector('.intro-description');
+
+    console.log('Updating translations to:', lang);
+    console.log('Found elements:', { 
+      greeting: !!greeting, 
+      role: !!role, 
+      description: !!description 
+    });
+
+    try {
+      if (greeting) {
+        const greetingText = getTranslation('intro.greeting', lang);
+        greeting.textContent = greetingText;
+        console.log('Updated greeting:', greetingText);
+      }
+      if (role) {
+        const roleText = getTranslation('intro.role', lang);
+        role.textContent = roleText;
+        console.log('Updated role:', roleText);
+      }
+      if (description) {
+        const descText = getTranslation('intro.description', lang);
+        description.textContent = descText;
+        console.log('Updated description:', descText);
+      }
+    } catch (error) {
+      console.error('Error updating translations:', error);
+    }
+  }
+
+  // Initialize translations as soon as possible
+  updateTranslations(document.documentElement.lang || localStorage.getItem('language') || 'en');
 
   // Update translations when language changes
   window.addEventListener('languagechange', (event) => {
     const lang = (event as CustomEvent).detail.language;
-    
-    if (greeting) greeting.textContent = getTranslation('intro.greeting', lang);
-    if (role) role.textContent = getTranslation('intro.role', lang);
-    if (description) description.textContent = getTranslation('intro.description', lang);
+    console.log('Language change event received:', lang);
+    updateTranslations(lang);
+  });
+
+  // Also update translations when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'en';
+    console.log('DOM loaded, updating with language:', currentLang);
+    updateTranslations(currentLang);
   });
 </script>

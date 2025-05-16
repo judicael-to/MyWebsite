@@ -7,7 +7,13 @@ type TranslationKey =
   | 'intro.greeting'
   | 'intro.role'
   | 'intro.description'
-  | 'info.title';
+  | 'about.title'
+  | 'about.tools'
+  | 'about.passions'
+  | 'about.passions.coding'
+  | 'about.passions.design'
+  | 'about.passions.tennis'
+  | 'about.passions.music';
 
 type Translations = {
   [key in TranslationKey]: string;
@@ -24,10 +30,16 @@ export const translations: Languages = {
     'contact.title': "Let's talk together!",
     'contact.details': 'Contact Details',
     'contact.socials': 'Socials',
-    'info.title': 'About me',
     'intro.greeting': 'Hi, I am Judicael',
     'intro.role': 'Full Stack Developer',
-    'intro.description': 'Passionate about creating innovative solutions and building amazing web experiences.'
+    'intro.description': 'Passionate about creating innovative solutions and building amazing web experiences.',
+    'about.title': 'About me',
+    'about.tools': 'My primary tools',
+    'about.passions': 'My passions',
+    'about.passions.coding': 'Coding',
+    'about.passions.design': 'Design',
+    'about.passions.tennis': 'Tennis',
+    'about.passions.music': 'Music'
   },
   fr: {
     'theme.dark': 'Sombre',
@@ -35,14 +47,20 @@ export const translations: Languages = {
     'contact.title': 'Parlons ensemble !',
     'contact.details': 'Coordonnées',
     'contact.socials': 'Réseaux',
-    'info.title': 'À propos de moi',
-    'intro.greeting': 'Bonjour, je suis Judicael',
+    'intro.greeting': 'Salut, je suis Judicael',
     'intro.role': 'Développeur Full Stack',
-    'intro.description': 'Passionné par la création de solutions innovantes et la construction d\'expériences web exceptionnelles.'
+    'intro.description': 'Passionné par la création de solutions innovantes et la construction d\'expériences web exceptionnelles.',
+    'about.title': 'À propos de moi',
+    'about.tools': 'Mes outils principaux',
+    'about.passions': 'Mes passions',
+    'about.passions.coding': 'Codage',
+    'about.passions.design': 'Design',
+    'about.passions.tennis': 'Tennis',
+    'about.passions.music': 'Musique'
   }
 };
 
-export function getTranslation(key: TranslationKey, lang: string = 'en'): string {
-  const language = translations[lang] || translations.en;
-  return language[key] || translations.en[key];
+export function getTranslation(key: TranslationKey, lang: string = 'fr'): string {
+  const language = translations[lang] || translations.fr;
+  return language[key] || translations.fr[key];
 } 

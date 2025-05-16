@@ -3,7 +3,7 @@ import Card from "./Card/index.astro";
 import { Icon } from "astro-icon/components";
 import { getTranslation } from "../lib/i18n/translations";
 
-const currentLang = Astro.cookies.get('language')?.value || 'en';
+const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-2" gradient={2}>
@@ -21,7 +21,7 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
     <div class="flex flex-col justify-center items-center">
       <div class="flex gap-6">
         <button class="language-btn custom-btn px-3 py-1" data-lang="en">English</button>
-        <button class="language-btn custom-btn px-3 py-1" data-lang="fr">Français</button>
+        <button class="language-btn custom-btn px-3 py-1 active" data-lang="fr">Français</button>
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
 
   // Function to set theme
   const setTheme = (theme: 'light' | 'dark') => {
-    const lang = document.documentElement.lang || 'en';
+    const lang = document.documentElement.lang || localStorage.getItem('language') || 'fr';
     if (theme === 'light') {
       document.documentElement.classList.add('light');
       if (themeText) themeText.textContent = getTranslation('theme.light', lang);
@@ -72,11 +72,10 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
   // Language selection
   const languageBtns = document.querySelectorAll<HTMLButtonElement>('.language-btn');
   
-  // Get saved language or default to 'en'
-  const currentLang = localStorage.getItem('language') || 'en';
-  
   // Function to set active language button
   const setActiveLanguage = (lang: string) => {
+    console.log('Setting active language:', lang);
+    
     languageBtns.forEach(btn => {
       if (btn.dataset.lang === lang) {
         btn.classList.add('active');
@@ -84,6 +83,8 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
         btn.classList.remove('active');
       }
     });
+
+    // Update storage and document
     localStorage.setItem('language', lang);
     document.documentElement.lang = lang;
     document.cookie = `language=${lang};path=/;max-age=31536000`; // 1 year
@@ -94,18 +95,26 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
       themeText.textContent = getTranslation(isLight ? 'theme.light' : 'theme.dark', lang);
     }
     
-    // Dispatch a custom event that other components can listen to
-    window.dispatchEvent(new CustomEvent('languagechange', { detail: { language: lang } }));
+    // Dispatch the language change event
+    const event = new CustomEvent('languagechange', { 
+      detail: { language: lang },
+      bubbles: true,
+      composed: true
+    });
+    console.log('Dispatching languagechange event:', event);
+    window.dispatchEvent(event);
   };
 
-  // Initialize active language
-  setActiveLanguage(currentLang);
+  // Initialize active language from storage or default
+  const storedLang = localStorage.getItem('language') || document.documentElement.lang || 'fr';
+  setActiveLanguage(storedLang);
 
   // Add click handlers to language buttons
   languageBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       if (lang) {
+        console.log('Language button clicked:', lang);
         setActiveLanguage(lang);
       }
     });
