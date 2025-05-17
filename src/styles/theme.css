@@ -4,10 +4,12 @@
   --background-secondary: #797979;
   --background-third: #262626;
   --text-primary: #ffffff;
-  --text-secondary: #797979;
+  --text-secondary: #8b8b8b;
   --shadow-color: rgba(194, 141, 255, 0.5);
+  --shadow-color-hover: rgba(141, 255, 160, 0.3);
   --button-bg: #171717;
-  --button-hover: #27236d;
+  --button-hover: #382a57;
+  --border-hover: rgb(0, 255, 102, 0.5);
   
   /* Card gradients for dark theme */
   --card-gradient-1: rgb(94, 0, 201);
@@ -26,13 +28,15 @@
 :root.light {
   /* Light theme colors */
   --background: #fdf8e9;
-  --background-secondary: #dcdcdc;
+  --background-secondary: #5e5e5e;
   --background-third: #646464;
-  --text-primary: #171717;
-  --text-secondary: #dcdcdc;
+  --text-primary: #000000;
+  --text-secondary: #5d5d5d;
   --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-color-hover: rgba(0, 0, 0, 0.5);
   --button-bg: #fbe3d0;
   --button-hover: #f5d4bc;
+  --border-hover: rgb(255, 0, 0);
   
   /* Card gradients for light theme */
   --card-gradient-1: #baf5cb;

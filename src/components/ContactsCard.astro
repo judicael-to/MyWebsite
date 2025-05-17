@@ -2,17 +2,16 @@
 import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 import { getTranslation } from "../lib/i18n/translations";
+import MixedFontTitle from "./MixedFontTitle.astro";
 
-const currentLang = Astro.cookies.get('language')?.value || 'en';
+const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
 ---
 
-<Card colSpan="md:col-span-2" rowSpan="md:row-span-2" gradient={4}>
+<Card colSpan="md:col-span-2" rowSpan="md:row-span-2" gradient={5}>
   <div class="h-full md:flex flex-row justify-around items-center relative">
     <div>
       <header class="flex items-center">
-        <h1 class="contact-title text-white text-xl font-bold">
-          {getTranslation('contact.title', currentLang)}
-        </h1>
+        <MixedFontTitle translationKey="contact.title" class="text-primary text-xl font-bold" />
       </header>
       <address class="flex flex-col mt-4">
         <h2 class="contact-details text-secondary">{getTranslation('contact.details', currentLang)}</h2>
@@ -42,28 +41,14 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
 
   function updateTranslations(lang: string) {
     // Get all elements that need translation using specific class selectors
-    const title = document.querySelector('.contact-title');
     const detailsHeading = document.querySelector('.contact-details');
     const socialsHeading = document.querySelector('.contact-socials');
 
-    console.log('Updating contact translations to:', lang);
-    console.log('Found elements:', { 
-      title: !!title, 
-      detailsHeading: !!detailsHeading, 
-      socialsHeading: !!socialsHeading 
-    });
-
-    if (title) {
-      title.textContent = getTranslation('contact.title', lang);
-      console.log('Updated title:', getTranslation('contact.title', lang));
-    }
     if (detailsHeading) {
       detailsHeading.textContent = getTranslation('contact.details', lang);
-      console.log('Updated details:', getTranslation('contact.details', lang));
     }
     if (socialsHeading) {
       socialsHeading.textContent = getTranslation('contact.socials', lang);
-      console.log('Updated socials:', getTranslation('contact.socials', lang));
     }
   }
 
@@ -75,7 +60,7 @@ const currentLang = Astro.cookies.get('language')?.value || 'en';
 
   // Also update translations when the page loads
   document.addEventListener('DOMContentLoaded', () => {
-    const currentLang = document.documentElement.lang || 'en';
+    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'fr';
     updateTranslations(currentLang);
   });
 </script>

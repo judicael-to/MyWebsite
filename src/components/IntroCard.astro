@@ -5,8 +5,20 @@ import { LINKS } from "../lib/constants";
 import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
 import { getTranslation } from "../lib/i18n/translations";
+import Content from "./Card/Content.astro";
+import MixedFontStyles from "./Card/MixedFontStyles.astro";
 
-const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'en';
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
+const name = "JUDICAEL";
+
+function wrapWithMixedFontSpans(text: string): string {
+  return text.split('').map((char: string, i: number) => {
+    const classNum = (i % 26) + 1;
+    return `<span class="char${classNum} font-transition" data-char="${char}">${char}</span>`;
+  }).join('');
+}
+
+const nameHtml = wrapWithMixedFontSpans(name);
 ---
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" gradient={1}>
@@ -14,13 +26,13 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
     <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
       <div class="flex flex-col h-full">
         <div class="flex flex-col gap-2">
-          <h6 class="text-sm font-light m-0 text-secondary">welcome</h6>
-          <h1 class="intro-greeting text-3xl font-bold text-primary m-0">
-            {getTranslation('intro.greeting', currentLang)}
-          </h1>
-          <h2 class="intro-role text-xl text-secondary m-0">
-            {getTranslation('intro.role', currentLang)}
-          </h2>
+          <div class="text-xl font-bold text-primary m-0">
+            <Content title="intro.greeting" />
+          </div>
+          <div class="text-4xl text-primary m-0">
+            <MixedFontStyles />
+            <div id="judicael-name" class="mixed-font judicael-name" set:html={nameHtml} />
+          </div>
         </div>
         <p class="intro-description m-0 font-light text-xl text-primary mt-4">
           {getTranslation('intro.description', currentLang)}
@@ -67,6 +79,20 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
   .text-primary {
     color: var(--text-primary);
   }
+  
+  .font-transition {
+    transition: font-family 1.5s ease-in-out, 
+                font-weight 1.5s ease-in-out,
+                font-style 1.5s ease-in-out,
+                transform 1.5s ease-in-out,
+                color 1.5s ease-in-out;
+  }
+  
+  .judicael-name span {
+    display: inline-block;
+    position: relative;
+    padding: 0 2px;
+  }
 </style>
 
 <script>
@@ -74,52 +100,108 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
 
   function updateTranslations(lang: string) {
     // Get all elements that need translation using specific class selectors
-    const greeting = document.querySelector('.intro-greeting');
-    const role = document.querySelector('.intro-role');
     const description = document.querySelector('.intro-description');
 
-    console.log('Updating translations to:', lang);
-    console.log('Found elements:', { 
-      greeting: !!greeting, 
-      role: !!role, 
-      description: !!description 
-    });
-
     try {
-      if (greeting) {
-        const greetingText = getTranslation('intro.greeting', lang);
-        greeting.textContent = greetingText;
-        console.log('Updated greeting:', greetingText);
-      }
-      if (role) {
-        const roleText = getTranslation('intro.role', lang);
-        role.textContent = roleText;
-        console.log('Updated role:', roleText);
-      }
       if (description) {
         const descText = getTranslation('intro.description', lang);
         description.textContent = descText;
-        console.log('Updated description:', descText);
       }
     } catch (error) {
       console.error('Error updating translations:', error);
     }
   }
 
-  // Initialize translations as soon as possible
-  updateTranslations(document.documentElement.lang || localStorage.getItem('language') || 'en');
+  // Global counter to verify the interval is running
+  let counter = 0;
+  let fontInterval: number | null = null;
+
+  // Function to shuffle the font assignments for "JUDICAEL" every 2 seconds
+  function startNameFontShuffler() {
+    if (fontInterval) {
+      clearInterval(fontInterval);
+    }
+    
+    const nameElement = document.getElementById('judicael-name');
+    console.log("Font shuffler starting, element found:", !!nameElement);
+    
+    if (!nameElement) return;
+    
+    // Initial setup
+    const name = "JUDICAEL";
+    const chars = nameElement.querySelectorAll('span');
+    
+    console.log(`Found ${chars.length} characters in the name element`);
+    
+    // If no spans exist yet, create them
+    if (chars.length === 0) {
+      console.log("Creating initial spans for", name);
+      nameElement.innerHTML = "";
+      
+      name.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.setAttribute('data-char', char);
+        span.classList.add(`char${(i % 26) + 1}`);
+        span.classList.add('font-transition');
+        nameElement.appendChild(span);
+      });
+    } else {
+      // Ensure existing spans have the transition class
+      chars.forEach(char => {
+        char.classList.add('font-transition');
+      });
+    }
+    
+    // Set up the interval to change fonts
+    fontInterval = window.setInterval(() => {
+      counter++;
+      console.log(`Font shuffle iteration ${counter}`);
+      
+      const currentChars = nameElement.querySelectorAll('span');
+      console.log(`Shuffling fonts for ${currentChars.length} characters`);
+      
+      currentChars.forEach(char => {
+        // Generate a random class number from 1-26
+        const randomClassNum = Math.floor(Math.random() * 26) + 1;
+        
+        // Remove all char classes
+        for (let i = 1; i <= 26; i++) {
+          char.classList.remove(`char${i}`);
+        }
+        
+        // Add new random class
+        char.classList.add(`char${randomClassNum}`);
+        
+        // Add random visual effects
+        const randomRotation = Math.floor(Math.random() * 8) - 4; // Random value between -4 and 4
+        const randomScale = 0.9 + (Math.random() * 0.2); // Random value between 0.9 and 1.1
+        char.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
+      });
+    }, 5000); // Change every 5 seconds
+    
+    console.log("Font shuffle interval set:", !!fontInterval);
+  }
+
+  // Try to initialize with multiple event listeners to ensure it runs
+  function initFontShuffler() {
+    console.log("Initializing font shuffler");
+    const lang = document.documentElement.lang || 'fr';
+    updateTranslations(lang);
+    startNameFontShuffler();
+  }
 
   // Update translations when language changes
-  window.addEventListener('languagechange', (event) => {
+  window.addEventListener('languagechange', (event: Event) => {
     const lang = (event as CustomEvent).detail.language;
-    console.log('Language change event received:', lang);
     updateTranslations(lang);
   });
 
-  // Also update translations when the page loads
-  document.addEventListener('DOMContentLoaded', () => {
-    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'en';
-    console.log('DOM loaded, updating with language:', currentLang);
-    updateTranslations(currentLang);
-  });
+  // Use multiple event listeners to ensure the code runs
+  document.addEventListener('astro:page-load', initFontShuffler);
+  document.addEventListener('DOMContentLoaded', initFontShuffler);
+  window.addEventListener('load', initFontShuffler);
+
+  // Direct initialization as a fallback
+  setTimeout(initFontShuffler, 1000);
 </script>

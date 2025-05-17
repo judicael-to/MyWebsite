@@ -7,6 +7,7 @@ import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
 import WebOption from "../components/WebOption.astro";
+import MixedFontTitle from "../components/MixedFontTitle.astro";
 ---
 
 <script>
@@ -32,26 +33,28 @@ import WebOption from "../components/WebOption.astro";
 </script>
 
 <Layout
-  title="Judicael TO - Computer science student"
+  title="Judicael TO | Computer science student"
   description="Computer science student with strong interest in web development, software engineering and data science. I am passionate about learning new technologies and sharing knowledge."
 >
   <main
-    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-9 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-8 lg:h-screen lg:grid-rows-9 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
   >
     <IntroCard />
     <WebOption />
     <AboutMe />
     <Now />
-    <TimeZone />
+    <ContactsCard />
     <Card
       colSpan="md:col-span-1"
       rowSpan="md:row-span-2"
-      title="My blog"
       href="/blog"
       gradient={6}
-    />
+    >
+      <MixedFontTitle translationKey="blog.title" class="text-xl font-bold" />
+    </Card>
     
-    <ContactsCard />
+    
+    <TimeZone />
     <Card colSpan="md:col-span-4" rowSpan="md:row-span-1" gradient={8}>
       <p class="text-xs">
         © 2024 · Crafted with ♥️ using <a

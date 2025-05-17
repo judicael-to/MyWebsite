@@ -134,8 +134,14 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
   }
   .language-btn.active {
     background-color: var(--button-hover);
-    transform: translateY(-2px);
-    box-shadow: 2px 2px 0 var(--shadow-color);
+    transform: translateY(1px) translateX(1px);
+    box-shadow: 0px 0px 0 var(--shadow-color);
+    transition: none;
+  }
+  .language-btn.active:hover {
+    transform: translateY(1px) translateX(1px);
+    box-shadow: 0px 0px 0 var(--shadow-color);
+    transition: none;
   }
   .background-third {
     background-color: var(--background-third);

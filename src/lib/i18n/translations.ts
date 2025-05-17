@@ -1,11 +1,10 @@
-type TranslationKey = 
+export type TranslationKey = 
   | 'theme.dark'
   | 'theme.light'
   | 'contact.title'
   | 'contact.details'
   | 'contact.socials'
   | 'intro.greeting'
-  | 'intro.role'
   | 'intro.description'
   | 'about.title'
   | 'about.tools'
@@ -13,7 +12,10 @@ type TranslationKey =
   | 'about.passions.coding'
   | 'about.passions.design'
   | 'about.passions.tennis'
-  | 'about.passions.music';
+  | 'about.passions.music'
+  | 'blog.title'
+  | 'birthday.countdown'
+  | 'welcome';
 
 type Translations = {
   [key in TranslationKey]: string;
@@ -30,8 +32,7 @@ export const translations: Languages = {
     'contact.title': "Let's talk together!",
     'contact.details': 'Contact Details',
     'contact.socials': 'Socials',
-    'intro.greeting': 'Hi, I am Judicael',
-    'intro.role': 'Full Stack Developer',
+    'intro.greeting': 'Hi, I am',
     'intro.description': 'Passionate about creating innovative solutions and building amazing web experiences.',
     'about.title': 'About me',
     'about.tools': 'My primary tools',
@@ -39,7 +40,10 @@ export const translations: Languages = {
     'about.passions.coding': 'Coding',
     'about.passions.design': 'Design',
     'about.passions.tennis': 'Tennis',
-    'about.passions.music': 'Music'
+    'about.passions.music': 'Music',
+    'blog.title': 'My Blog',
+    'birthday.countdown': 'Time before my birthday:',
+    'welcome': 'WELCOME.'
   },
   fr: {
     'theme.dark': 'Sombre',
@@ -47,8 +51,7 @@ export const translations: Languages = {
     'contact.title': 'Parlons ensemble !',
     'contact.details': 'Coordonnées',
     'contact.socials': 'Réseaux',
-    'intro.greeting': 'Salut, je suis Judicael',
-    'intro.role': 'Développeur Full Stack',
+    'intro.greeting': 'Salut, je suis',
     'intro.description': 'Passionné par la création de solutions innovantes et la construction d\'expériences web exceptionnelles.',
     'about.title': 'À propos de moi',
     'about.tools': 'Mes outils principaux',
@@ -56,7 +59,10 @@ export const translations: Languages = {
     'about.passions.coding': 'Codage',
     'about.passions.design': 'Design',
     'about.passions.tennis': 'Tennis',
-    'about.passions.music': 'Musique'
+    'about.passions.music': 'Musique',
+    'blog.title': 'Mon Blog',
+    'birthday.countdown': 'Temps avant mon anniversaire :',
+    'welcome': 'BIENVENUE.'
   }
 };
 

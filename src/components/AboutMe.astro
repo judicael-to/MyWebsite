@@ -2,15 +2,16 @@
 import Card from "./Card/index.astro";
 import { Icon } from "astro-icon/components";
 import { getTranslation } from "../lib/i18n/translations";
+import Content from "./Card/Content.astro";
 
 const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4" gradient={3}>
   <div class="flex flex-col gap-2">
-    <h1 class="about-title text-xl font-bold">
-      {getTranslation('about.title', currentLang)}
-    </h1>
+    <div class="text-xl font-bold">
+      <Content title="about.title" />
+    </div>
     <p class="text-sm font-light">
       <span class="about-tools">{getTranslation('about.tools', currentLang)}</span> :
       <div class="flex flex-wrap gap-2 mt-2">

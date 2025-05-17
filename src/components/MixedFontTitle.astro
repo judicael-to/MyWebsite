@@ -1,0 +1,92 @@
+---
+import type { TranslationKey } from "../lib/i18n/translations";
+import { getTranslation } from "../lib/i18n/translations";
+import MixedFontStyles from "./Card/MixedFontStyles.astro";
+
+interface Props {
+  translationKey: TranslationKey;
+  class?: string;
+}
+
+const { translationKey, class: className = "" } = Astro.props;
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
+const translatedText = getTranslation(translationKey, currentLang);
+
+function wrapWithMixedFontSpans(text: string): string {
+  return text.split('').map((char: string, i: number) => {
+    const classNum = (i % 26) + 1;
+    return `<span class="char${classNum}">${char}</span>`;
+  }).join('');
+}
+
+const initialHtml = wrapWithMixedFontSpans(translatedText);
+---
+
+<MixedFontStyles />
+<div class={`mixed-font ${className}`} data-translation-key={translationKey} set:html={initialHtml} />
+
+<script>
+  import type { TranslationKey } from "../lib/i18n/translations";
+  import { getTranslation } from "../lib/i18n/translations";
+
+  function wrapWithMixedFontSpans(text: string): string {
+    return text.split('').map((char: string, i: number) => {
+      const classNum = (i % 26) + 1;
+      return `<span class="char${classNum}">${char}</span>`;
+    }).join('');
+  }
+
+  function updateTitle(element: HTMLElement, lang: string): void {
+    const key = element.dataset.translationKey as TranslationKey;
+    if (!key) return;
+    
+    const translatedText = getTranslation(key, lang);
+    element.innerHTML = wrapWithMixedFontSpans(translatedText);
+  }
+
+  function updateAllTitles(lang: string): void {
+    document.querySelectorAll('.mixed-font[data-translation-key]').forEach(element => {
+      updateTitle(element as HTMLElement, lang);
+    });
+  }
+
+  // Function to shuffle the font assignments for "judicael" every 5 seconds
+  function startJudicaelFontShuffler(): void {
+    // Only apply this to elements with the translationKey of "intro.role"
+    const judicaelElements = document.querySelectorAll('.mixed-font[data-translation-key="intro.role"]');
+    
+    if (judicaelElements.length === 0) return;
+    
+    setInterval(() => {
+      judicaelElements.forEach(element => {
+        const chars = element.querySelectorAll('span');
+        // Shuffle the class names for each character
+        chars.forEach(char => {
+          // Generate a random class number from 1-26
+          const randomClassNum = Math.floor(Math.random() * 26) + 1;
+          // Remove all char classes
+          for (let i = 1; i <= 26; i++) {
+            char.classList.remove(`char${i}`);
+          }
+          // Add new random class
+          char.classList.add(`char${randomClassNum}`);
+        });
+      });
+    }, 5000); // Change every 5 seconds
+  }
+
+  // Update when language changes
+  window.addEventListener('languagechange', (event: Event) => {
+    const lang = (event as CustomEvent).detail.language;
+    updateAllTitles(lang);
+  });
+
+  // Update on page load
+  document.addEventListener('astro:page-load', () => {
+    const lang = document.documentElement.lang || 'fr';
+    updateAllTitles(lang);
+    
+    // Start the font shuffler for "judicael"
+    startJudicaelFontShuffler();
+  });
+</script>

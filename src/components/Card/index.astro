@@ -1,9 +1,10 @@
 ---
 import { Icon } from 'astro-icon/components'
 import Content from "./Content.astro";
+import type { TranslationKey } from "../../lib/i18n/translations";
 
 interface Props {
-  title?: string;
+  title?: TranslationKey;
   body?: string;
   colSpan?: string;
   rowSpan?: string;
@@ -16,7 +17,7 @@ const { title, body, colSpan, rowSpan, href, colorText, gradient = 1 } = Astro.p
 ---
 
 <div
-  class={`card group overflow-hidden transfor-y-[-40%] bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100 hover:border-primary-500 align-start flex-none justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 h-auto ${
+  class={`card group overflow-hidden transfor-y-[-40%] bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100 hover:border-[var(--border-hover)] align-start flex-none justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 h-auto ${
     colSpan || "md:col-span-2"
   } ${rowSpan || ""}`}
   data-gradient={gradient}
@@ -26,7 +27,7 @@ const { title, body, colSpan, rowSpan, href, colorText, gradient = 1 } = Astro.p
       <a href={href} class={`h-full w-full ${colorText || " "}`}>
         <Icon
           name="ri:arrow-right-up-line"
-          class="h-6 float-right group-hover:text-primary-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
+          class="h-6 float-right group-hover:text-[var(--border-hover)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
         />
         <Content title={title} body={body}>
           <slot />
@@ -45,7 +46,7 @@ const { title, body, colSpan, rowSpan, href, colorText, gradient = 1 } = Astro.p
     background-color: var(--card-background);
     color: var(--text-primary);
     border-color: var(--border-color);
-    box-shadow: 0 0 12px var(--shadow-color);
+    box-shadow: 0px 0px 10px var(--shadow-color);
     transition: all 0.3s ease;
   }
   
@@ -83,7 +84,7 @@ const { title, body, colSpan, rowSpan, href, colorText, gradient = 1 } = Astro.p
 
   .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 28px var(--shadow-color);
+    box-shadow: 0 0 28px var(--shadow-color-hover);
   }
 
   a {
