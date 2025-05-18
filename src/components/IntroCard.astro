@@ -29,7 +29,7 @@ const nameHtml = wrapWithMixedFontSpans(name);
           <div class="text-xl font-bold text-primary m-0">
             <Content title="intro.greeting" />
           </div>
-          <div class="text-4xl text-primary m-0">
+          <div class="text-6xl text-primary m-0">
             <MixedFontStyles />
             <div id="judicael-name" class="mixed-font judicael-name" set:html={nameHtml} />
           </div>
@@ -93,6 +93,7 @@ const nameHtml = wrapWithMixedFontSpans(name);
     position: relative;
     padding: 0 2px;
   }
+
 </style>
 
 <script>
@@ -153,34 +154,60 @@ const nameHtml = wrapWithMixedFontSpans(name);
       });
     }
     
-    // Set up the interval to change fonts
-    fontInterval = window.setInterval(() => {
-      counter++;
-      console.log(`Font shuffle iteration ${counter}`);
-      
-      const currentChars = nameElement.querySelectorAll('span');
-      console.log(`Shuffling fonts for ${currentChars.length} characters`);
-      
-      currentChars.forEach(char => {
-        // Generate a random class number from 1-26
-        const randomClassNum = Math.floor(Math.random() * 26) + 1;
-        
-        // Remove all char classes
-        for (let i = 1; i <= 26; i++) {
-          char.classList.remove(`char${i}`);
-        }
-        
-        // Add new random class
-        char.classList.add(`char${randomClassNum}`);
-        
-        // Add random visual effects
-        const randomRotation = Math.floor(Math.random() * 8) - 4; // Random value between -4 and 4
-        const randomScale = 0.9 + (Math.random() * 0.2); // Random value between 0.9 and 1.1
-        char.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
-      });
-    }, 5000); // Change every 5 seconds
+    let currentCharIndex = 0;
+    const totalChars = name.length;
+    let isWaiting = false;
     
-    console.log("Font shuffle interval set:", !!fontInterval);
+    // Function to change a single character
+    function changeNextCharacter() {
+      // Skip if we're in waiting period
+      if (isWaiting) return;
+      
+      // Get current element and check if it still exists
+      const currentNameElement = document.getElementById('judicael-name');
+      if (!currentNameElement) return;
+      
+      // Get the current spans
+      const currentChars = currentNameElement.querySelectorAll('span');
+      if (currentChars.length === 0) return;
+      
+      // Change only one character at a time
+      const charToChange = currentChars[currentCharIndex];
+      
+      // Generate a random class number from 1-26
+      const randomClassNum = Math.floor(Math.random() * 26) + 1;
+      
+      // Remove all char classes from this character
+      for (let i = 1; i <= 26; i++) {
+        charToChange.classList.remove(`char${i}`);
+      }
+      
+      // Add new random class to this character
+      charToChange.classList.add(`char${randomClassNum}`);
+      
+      // Move to the next character
+      currentCharIndex = (currentCharIndex + 1) % totalChars;
+      
+      // Log current progress
+      counter++;
+      
+      // If we've completed a cycle, wait for 2 seconds before starting again
+      if (currentCharIndex === 0) {
+        console.log(`Completed full cycle ${Math.floor(counter / totalChars)}`);
+        isWaiting = true;
+        
+        // After 10 seconds, allow the cycle to continue
+        setTimeout(() => {
+          console.log("Resuming after 10-second pause");
+          isWaiting = false;
+        }, 10000);
+      }
+    }
+    
+    // Set up the interval to change fonts
+    fontInterval = window.setInterval(changeNextCharacter, 100);
+    
+    console.log("Sequential font shuffle interval set:", !!fontInterval);
   }
 
   // Try to initialize with multiple event listeners to ensure it runs

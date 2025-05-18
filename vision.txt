@@ -1,0 +1,3 @@
+portfolio : 
+- main page : fare une card avec les diff projets
+- projet page : presentation du prjet sous la meme forme que la main page

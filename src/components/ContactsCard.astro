@@ -2,16 +2,16 @@
 import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 import { getTranslation } from "../lib/i18n/translations";
-import MixedFontTitle from "./MixedFontTitle.astro";
 
 const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
+const contactTitle = getTranslation('contact.title', currentLang);
 ---
 
 <Card colSpan="md:col-span-2" rowSpan="md:row-span-2" gradient={5}>
   <div class="h-full md:flex flex-row justify-around items-center relative">
     <div>
       <header class="flex items-center">
-        <MixedFontTitle translationKey="contact.title" class="text-primary text-xl font-bold" />
+        <h2 class="contact-title text-primary text-xl font-bold" data-translation-key="contact.title">{contactTitle}</h2>
       </header>
       <address class="flex flex-col mt-4">
         <h2 class="contact-details text-secondary">{getTranslation('contact.details', currentLang)}</h2>
@@ -41,9 +41,13 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
 
   function updateTranslations(lang: string) {
     // Get all elements that need translation using specific class selectors
+    const titleHeading = document.querySelector('.contact-title');
     const detailsHeading = document.querySelector('.contact-details');
     const socialsHeading = document.querySelector('.contact-socials');
 
+    if (titleHeading) {
+      titleHeading.textContent = getTranslation('contact.title', lang);
+    }
     if (detailsHeading) {
       detailsHeading.textContent = getTranslation('contact.details', lang);
     }

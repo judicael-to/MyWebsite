@@ -1,5 +1,4 @@
 ---
-import MixedFontStyles from "./MixedFontStyles.astro";
 import type { TranslationKey } from "../../lib/i18n/translations";
 import { getTranslation } from "../../lib/i18n/translations";
 
@@ -11,26 +10,12 @@ interface Props {
 const { title, body } = Astro.props;
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
 
-function wrapWithMixedFontSpans(text: string) {
-  return text.split('').map((char, i) => {
-    const classNum = (i % 26) + 1;
-    return {
-      char,
-      className: `char${classNum}`
-    };
-  });
-}
-
 const translatedTitle = title ? getTranslation(title, currentLang) : '';
-const titleChars = translatedTitle ? wrapWithMixedFontSpans(translatedTitle) : [];
 ---
 
-<MixedFontStyles />
 {title && 
-  <h2 class="mixed-font" data-translation-key={title}>
-    {titleChars.map(({char, className}) => (
-      <span class={className}>{char}</span>
-    ))}
+  <h2 data-translation-key={title}>
+    {translatedTitle}
   </h2>
 }
 {body && <p class="m-0 font-light text-base">{body}</p>}
@@ -40,28 +25,21 @@ const titleChars = translatedTitle ? wrapWithMixedFontSpans(translatedTitle) : [
   import type { TranslationKey } from "../../lib/i18n/translations";
   import { getTranslation } from "../../lib/i18n/translations";
 
-  function wrapWithMixedFontSpans(text: string) {
-    return text.split('').map((char, i) => {
-      const classNum = (i % 26) + 1;
-      return `<span class="char${classNum}">${char}</span>`;
-    }).join('');
-  }
-
-  function updateTitleWithMixedFont(element: HTMLElement, translationKey: TranslationKey, lang: string) {
+  function updateTitle(element: HTMLElement, translationKey: TranslationKey, lang: string) {
     if (!element || !translationKey) return;
     const translatedText = getTranslation(translationKey, lang);
-    element.innerHTML = wrapWithMixedFontSpans(translatedText);
+    element.textContent = translatedText;
   }
 
-  // Update all mixed-font titles when language changes
+  // Update all titles when language changes
   window.addEventListener('languagechange', (event: Event) => {
     const lang = (event as CustomEvent).detail.language;
-    const titles = document.querySelectorAll('.mixed-font[data-translation-key]');
+    const titles = document.querySelectorAll('h2[data-translation-key]');
     
     titles.forEach((titleElement) => {
       const translationKey = (titleElement as HTMLElement).dataset.translationKey as TranslationKey;
       if (translationKey) {
-        updateTitleWithMixedFont(titleElement as HTMLElement, translationKey, lang);
+        updateTitle(titleElement as HTMLElement, translationKey, lang);
       }
     });
   });
@@ -69,12 +47,12 @@ const titleChars = translatedTitle ? wrapWithMixedFontSpans(translatedTitle) : [
   // Also update when the page loads
   document.addEventListener('astro:page-load', () => {
     const lang = document.documentElement.lang || 'fr';
-    const titles = document.querySelectorAll('.mixed-font[data-translation-key]');
+    const titles = document.querySelectorAll('h2[data-translation-key]');
     
     titles.forEach((titleElement) => {
       const translationKey = (titleElement as HTMLElement).dataset.translationKey as TranslationKey;
       if (translationKey) {
-        updateTitleWithMixedFont(titleElement as HTMLElement, translationKey, lang);
+        updateTitle(titleElement as HTMLElement, translationKey, lang);
       }
     });
   });
