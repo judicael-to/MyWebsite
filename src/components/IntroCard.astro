@@ -22,7 +22,7 @@ const nameHtml = wrapWithMixedFontSpans(name);
 ---
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" gradient={1}>
-  <div class="flex w-full h-full">
+  <div class="flex w-full h-full flex-col md:flex-row">
     <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
       <div class="flex flex-col h-full">
         <div class="flex flex-col gap-2">
@@ -65,7 +65,7 @@ const nameHtml = wrapWithMixedFontSpans(name);
       width="300"
       height="300"
       src="/me.webp"
-      class="w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none transition-opacity hover:opacity-95"
+      class="w-auto max-h-[300px] select-none md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none transition-opacity hover:opacity-95 mx-auto md:mx-0 mt-4 md:mt-0"
       alt="memoji of judicael"
     />
   </div>
@@ -113,109 +113,92 @@ const nameHtml = wrapWithMixedFontSpans(name);
     }
   }
 
-  // Global counter to verify the interval is running
-  let counter = 0;
+  // Remove the global counter and interval to simplify the script
   let fontInterval: number | null = null;
 
-  // Function to shuffle the font assignments for "JUDICAEL" every 2 seconds
+  // Simpler function to shuffle the font assignments for "JUDICAEL"
   function startNameFontShuffler() {
-    if (fontInterval) {
-      clearInterval(fontInterval);
-    }
-    
-    const nameElement = document.getElementById('judicael-name');
-    console.log("Font shuffler starting, element found:", !!nameElement);
-    
-    if (!nameElement) return;
-    
-    // Initial setup
-    const name = "JUDICAEL";
-    const chars = nameElement.querySelectorAll('span');
-    
-    console.log(`Found ${chars.length} characters in the name element`);
-    
-    // If no spans exist yet, create them
-    if (chars.length === 0) {
-      console.log("Creating initial spans for", name);
-      nameElement.innerHTML = "";
-      
-      name.split('').forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.setAttribute('data-char', char);
-        span.classList.add(`char${(i % 26) + 1}`);
-        span.classList.add('font-transition');
-        nameElement.appendChild(span);
-      });
-    } else {
-      // Ensure existing spans have the transition class
-      chars.forEach(char => {
-        char.classList.add('font-transition');
-      });
-    }
-    
-    let currentCharIndex = 0;
-    const totalChars = name.length;
-    let isWaiting = false;
-    
-    // Function to change a single character
-    function changeNextCharacter() {
-      // Skip if we're in waiting period
-      if (isWaiting) return;
-      
-      // Get current element and check if it still exists
-      const currentNameElement = document.getElementById('judicael-name');
-      if (!currentNameElement) return;
-      
-      // Get the current spans
-      const currentChars = currentNameElement.querySelectorAll('span');
-      if (currentChars.length === 0) return;
-      
-      // Change only one character at a time
-      const charToChange = currentChars[currentCharIndex];
-      
-      // Generate a random class number from 1-26
-      const randomClassNum = Math.floor(Math.random() * 26) + 1;
-      
-      // Remove all char classes from this character
-      for (let i = 1; i <= 26; i++) {
-        charToChange.classList.remove(`char${i}`);
+    try {
+      if (fontInterval) {
+        clearInterval(fontInterval);
+        fontInterval = null;
       }
       
-      // Add new random class to this character
-      charToChange.classList.add(`char${randomClassNum}`);
+      const nameElement = document.getElementById('judicael-name');
+      console.log("Font shuffler starting, element found:", !!nameElement);
       
-      // Move to the next character
-      currentCharIndex = (currentCharIndex + 1) % totalChars;
+      if (!nameElement) return;
       
-      // Log current progress
-      counter++;
+      // Initial setup
+      const name = "JUDICAEL";
+      const existingSpans = nameElement.querySelectorAll('span');
       
-      // If we've completed a cycle, wait for 2 seconds before starting again
-      if (currentCharIndex === 0) {
-        console.log(`Completed full cycle ${Math.floor(counter / totalChars)}`);
-        isWaiting = true;
+      // Only create spans if they don't exist
+      if (existingSpans.length !== name.length) {
+        console.log("Creating initial spans for", name);
+        nameElement.innerHTML = "";
         
-        // After 10 seconds, allow the cycle to continue
-        setTimeout(() => {
-          console.log("Resuming after 10-second pause");
-          isWaiting = false;
-        }, 10000);
+        name.split('').forEach((char, i) => {
+          const span = document.createElement('span');
+          span.textContent = char;
+          span.setAttribute('data-char', char);
+          span.classList.add(`char${(i % 26) + 1}`);
+          span.classList.add('font-transition');
+          nameElement.appendChild(span);
+        });
       }
+      
+      // Change one character at a time in sequence
+      let currentIndex = 0;
+      
+      function changeCharacter() {
+        try {
+          // Get all spans
+          const spans = document.querySelectorAll('#judicael-name span');
+          if (!spans || spans.length === 0) return;
+          
+          // Get the current character to change
+          const span = spans[currentIndex];
+          
+          // Generate a random font class
+          const randomClass = Math.floor(Math.random() * 26) + 1;
+          
+          // Remove all existing font classes
+          for (let i = 1; i <= 26; i++) {
+            span.classList.remove(`char${i}`);
+          }
+          
+          // Add the new font class
+          span.classList.add(`char${randomClass}`);
+          
+          // Move to next character
+          currentIndex = (currentIndex + 1) % spans.length;
+        } catch (err) {
+          console.error("Error changing character:", err);
+        }
+      }
+
+      // Change a character every 200ms
+      fontInterval = window.setInterval(changeCharacter, 200);
+    } catch (error) {
+      console.error("Error in font shuffler:", error);
     }
-    
-    // Set up the interval to change fonts
-    fontInterval = window.setInterval(changeNextCharacter, 100);
-    
-    console.log("Sequential font shuffle interval set:", !!fontInterval);
   }
 
-  // Try to initialize with multiple event listeners to ensure it runs
+  // Initialize with a simple approach
   function initFontShuffler() {
     console.log("Initializing font shuffler");
     const lang = document.documentElement.lang || 'fr';
     updateTranslations(lang);
-    startNameFontShuffler();
+    
+    // Ensure any previous interval is cleared
+    if (fontInterval) {
+      clearInterval(fontInterval);
+      fontInterval = null;
+    }
+    
+    // Start with a delay to ensure the DOM is fully loaded
+    setTimeout(startNameFontShuffler, 500);
   }
 
   // Update translations when language changes
@@ -224,11 +207,13 @@ const nameHtml = wrapWithMixedFontSpans(name);
     updateTranslations(lang);
   });
 
-  // Use multiple event listeners to ensure the code runs
+  // Simple initialization that works across browsers
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFontShuffler);
+  } else {
+    initFontShuffler();
+  }
+  
+  // Re-initialize when Astro loads a new page
   document.addEventListener('astro:page-load', initFontShuffler);
-  document.addEventListener('DOMContentLoaded', initFontShuffler);
-  window.addEventListener('load', initFontShuffler);
-
-  // Direct initialization as a fallback
-  setTimeout(initFontShuffler, 1000);
 </script>

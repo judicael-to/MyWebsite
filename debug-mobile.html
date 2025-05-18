@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Mobile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    .mixed-font span {
+      display: inline-block;
+      margin: 0 1px;
+      transition: font-family 1.5s ease-in-out, 
+                  font-weight 1.5s ease-in-out,
+                  font-style 1.5s ease-in-out,
+                  transform 1.5s ease-in-out,
+                  color 1.5s ease-in-out;
+    }
+    
+    .judicael-name {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .debug-info {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    
+    .char1 { font-family: 'Times New Roman', serif; font-weight: bold; }
+    .char2 { font-family: 'Arial', sans-serif; font-style: italic; }
+    .char3 { font-family: 'Courier New', monospace; }
+    .char4 { font-family: 'Impact', sans-serif; }
+    .char5 { font-family: 'Georgia', serif; font-weight: bold; }
+    .char6 { font-family: 'Verdana', sans-serif; }
+    .char7 { font-family: 'Trebuchet MS', sans-serif; }
+    .char8 { font-family: 'Palatino Linotype', serif; font-style: italic; }
+    .char9 { font-family: 'Lucida Console', monospace; }
+    .char10 { font-family: 'Garamond', serif; }
+    .char11 { font-family: 'Bookman Old Style', serif; }
+    .char12 { font-family: 'Century Gothic', sans-serif; }
+    .char13 { font-family: 'Copperplate', serif; text-transform: uppercase; }
+    .char14 { font-family: 'Brush Script MT', cursive; }
+    .char15 { font-family: 'Tahoma', sans-serif; font-weight: bold; }
+    .char16 { font-family: 'Didot', serif; }
+    .char17 { font-family: 'Optima', sans-serif; }
+    .char18 { font-family: 'Arial Black', sans-serif; }
+    .char19 { font-family: 'Rockwell', serif; }
+    .char20 { font-family: 'Helvetica', sans-serif; }
+    .char21 { font-family: 'Baskerville', serif; }
+    .char22 { font-family: 'Comic Sans MS', cursive; }
+    .char23 { font-family: 'Futura', sans-serif; }
+    .char24 { font-family: 'Cambria', serif; }
+    .char25 { font-family: 'Consolas', monospace; }
+    .char26 { font-family: 'Franklin Gothic Medium', sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="judicael-name" class="mixed-font judicael-name"></div>
+  <div>Testing mobile compatibility</div>
+  <div class="debug-info" id="debug-log">Loading...</div>
+
+  <script>
+    const debugLog = document.getElementById('debug-log');
+    
+    function log(message) {
+      console.log(message);
+      if (debugLog) {
+        debugLog.textContent += message + "\n";
+      }
+    }
+
+    log("Script started");
+    
+    // Global counter to verify the interval is running
+    let counter = 0;
+    let fontInterval = null;
+
+    // Function to shuffle the font assignments for "JUDICAEL" every 2 seconds
+    function startNameFontShuffler() {
+      try {
+        if (fontInterval) {
+          clearInterval(fontInterval);
+          log("Cleared previous interval");
+        }
+        
+        const nameElement = document.getElementById('judicael-name');
+        log("Name element found: " + (nameElement ? "yes" : "no"));
+        
+        if (!nameElement) return;
+        
+        // Initial setup
+        const name = "JUDICAEL";
+        nameElement.innerHTML = "";
+        
+        log("Creating initial spans for " + name);
+        
+        name.split('').forEach((char, i) => {
+          const span = document.createElement('span');
+          span.textContent = char;
+          span.setAttribute('data-char', char);
+          span.classList.add(`char${(i % 26) + 1}`);
+          nameElement.appendChild(span);
+        });
+        
+        const chars = nameElement.querySelectorAll('span');
+        log(`Created ${chars.length} character spans`);
+        
+        let currentCharIndex = 0;
+        const totalChars = name.length;
+        
+        // Function to change a single character
+        function changeNextCharacter() {
+          try {
+            // Get current element and check if it still exists
+            const currentNameElement = document.getElementById('judicael-name');
+            if (!currentNameElement) {
+              log("Name element no longer exists");
+              return;
+            }
+            
+            // Get the current spans
+            const currentChars = currentNameElement.querySelectorAll('span');
+            if (currentChars.length === 0) {
+              log("No spans found");
+              return;
+            }
+            
+            // Change only one character at a time
+            const charToChange = currentChars[currentCharIndex];
+            
+            // Generate a random class number from 1-26
+            const randomClassNum = Math.floor(Math.random() * 26) + 1;
+            
+            // Remove all char classes from this character
+            for (let i = 1; i <= 26; i++) {
+              charToChange.classList.remove(`char${i}`);
+            }
+            
+            // Add new random class to this character
+            charToChange.classList.add(`char${randomClassNum}`);
+            
+            // Move to the next character
+            currentCharIndex = (currentCharIndex + 1) % totalChars;
+            
+            // Log current progress
+            counter++;
+            if (counter % 8 === 0) {
+              log(`Changed ${counter} characters. Current index: ${currentCharIndex}`);
+            }
+          } catch (error) {
+            log("Error in changeNextCharacter: " + error.message);
+          }
+        }
+        
+        // Set up the interval to change fonts
+        fontInterval = setInterval(changeNextCharacter, 200);
+        log("Font shuffle interval set: " + (fontInterval ? "yes" : "no"));
+        
+      } catch (error) {
+        log("Error in startNameFontShuffler: " + error.message);
+      }
+    }
+
+    // Try to initialize
+    log("Starting initialization");
+    document.addEventListener('DOMContentLoaded', () => {
+      log("DOMContentLoaded event fired");
+      startNameFontShuffler();
+    });
+
+    // Direct initialization as a fallback
+    window.addEventListener('load', () => {
+      log("Window load event fired");
+      startNameFontShuffler();
+    });
+
+    // Direct initialization right away
+    setTimeout(() => {
+      log("Timeout callback fired");
+      startNameFontShuffler();
+    }, 1000);
+  </script>
+</body>
+</html> 
