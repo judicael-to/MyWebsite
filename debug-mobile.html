@@ -41,6 +41,8 @@
       border-radius: 5px;
       font-family: monospace;
       white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
     }
     
     .char1 { font-family: 'Times New Roman', serif; font-weight: bold; }
@@ -78,34 +80,48 @@
 
   <script>
     const debugLog = document.getElementById('debug-log');
+    const MAX_LOG_LINES = 50;
+    let logLines = [];
     
     function log(message) {
       console.log(message);
       if (debugLog) {
-        debugLog.textContent += message + "\n";
+        logLines.push(message);
+        if (logLines.length > MAX_LOG_LINES) {
+          logLines.shift();
+        }
+        debugLog.textContent = logLines.join("\n");
       }
     }
 
     log("Script started");
     
-    // Global counter to verify the interval is running
     let counter = 0;
     let fontInterval = null;
+    let isInitialized = false;
 
-    // Function to shuffle the font assignments for "JUDICAEL" every 2 seconds
+    function cleanup() {
+      if (fontInterval) {
+        clearInterval(fontInterval);
+        fontInterval = null;
+      }
+      isInitialized = false;
+    }
+
     function startNameFontShuffler() {
       try {
-        if (fontInterval) {
-          clearInterval(fontInterval);
-          log("Cleared previous interval");
+        if (isInitialized) {
+          log("Already initialized, skipping");
+          return;
         }
+
+        cleanup();
         
         const nameElement = document.getElementById('judicael-name');
         log("Name element found: " + (nameElement ? "yes" : "no"));
         
         if (!nameElement) return;
         
-        // Initial setup
         const name = "JUDICAEL";
         nameElement.innerHTML = "";
         
@@ -125,77 +141,60 @@
         let currentCharIndex = 0;
         const totalChars = name.length;
         
-        // Function to change a single character
         function changeNextCharacter() {
           try {
-            // Get current element and check if it still exists
             const currentNameElement = document.getElementById('judicael-name');
             if (!currentNameElement) {
               log("Name element no longer exists");
+              cleanup();
               return;
             }
             
-            // Get the current spans
             const currentChars = currentNameElement.querySelectorAll('span');
             if (currentChars.length === 0) {
               log("No spans found");
+              cleanup();
               return;
             }
             
-            // Change only one character at a time
             const charToChange = currentChars[currentCharIndex];
-            
-            // Generate a random class number from 1-26
             const randomClassNum = Math.floor(Math.random() * 26) + 1;
             
-            // Remove all char classes from this character
             for (let i = 1; i <= 26; i++) {
               charToChange.classList.remove(`char${i}`);
             }
             
-            // Add new random class to this character
             charToChange.classList.add(`char${randomClassNum}`);
-            
-            // Move to the next character
             currentCharIndex = (currentCharIndex + 1) % totalChars;
             
-            // Log current progress
             counter++;
             if (counter % 8 === 0) {
               log(`Changed ${counter} characters. Current index: ${currentCharIndex}`);
             }
           } catch (error) {
             log("Error in changeNextCharacter: " + error.message);
+            cleanup();
           }
         }
         
-        // Set up the interval to change fonts
         fontInterval = setInterval(changeNextCharacter, 200);
+        isInitialized = true;
         log("Font shuffle interval set: " + (fontInterval ? "yes" : "no"));
         
       } catch (error) {
         log("Error in startNameFontShuffler: " + error.message);
+        cleanup();
       }
     }
 
-    // Try to initialize
-    log("Starting initialization");
+    // Initialize only once
     document.addEventListener('DOMContentLoaded', () => {
       log("DOMContentLoaded event fired");
       startNameFontShuffler();
     });
 
-    // Direct initialization as a fallback
-    window.addEventListener('load', () => {
-      log("Window load event fired");
-      startNameFontShuffler();
-    });
-
-    // Direct initialization right away
-    setTimeout(() => {
-      log("Timeout callback fired");
-      startNameFontShuffler();
-    }, 1000);
+    // Cleanup on page unload
+    window.addEventListener('unload', cleanup);
   </script>
 </body>
 </html> 
