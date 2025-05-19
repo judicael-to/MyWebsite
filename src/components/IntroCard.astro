@@ -146,6 +146,7 @@ const nameHtml = wrapWithMixedFontSpans(name);
       
       // Change one character at a time in sequence
       let currentIndex = 0;
+      let animationFrame: number | null = null;
       
       function changeCharacter() {
         try {
@@ -172,24 +173,35 @@ const nameHtml = wrapWithMixedFontSpans(name);
 
           // If we've completed one full loop, reset to first character after 10s
           if (currentIndex === 0) {
-            // Clear the current interval
-            if (fontInterval) {
-              clearInterval(fontInterval);
-              fontInterval = null;
+            // Clear the current animation frame
+            if (animationFrame) {
+              cancelAnimationFrame(animationFrame);
+              animationFrame = null;
             }
-            // Set a new interval after 10 seconds
+            // Set a new animation after 10 seconds
             setTimeout(() => {
               currentIndex = 0; // Reset to first character
-              fontInterval = window.setInterval(changeCharacter, 100);
+              animate();
             }, 10000);
+          } else {
+            // Continue animation
+            animationFrame = requestAnimationFrame(() => {
+              setTimeout(animate, 100);
+            });
           }
         } catch (err) {
           console.error("Error changing character:", err);
         }
       }
 
-      // Change a character every 200ms
-      fontInterval = window.setInterval(changeCharacter, 100);
+      function animate() {
+        animationFrame = requestAnimationFrame(() => {
+          setTimeout(changeCharacter, 100);
+        });
+      }
+
+      // Start animation
+      animate();
     } catch (error) {
       console.error("Error in font shuffler:", error);
     }
