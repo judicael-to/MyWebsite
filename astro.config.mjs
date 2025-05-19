@@ -23,21 +23,17 @@ export default defineConfig({
 		UnoCSS({
 			injectReset: true,
 		}),
-		icon(),
+		icon()
 	],
 	markdown: {
 		remarkPlugins: [remarkReadingTime],
 	},
 	output: 'server',
 	adapter: vercel({
-		webAnalytics: {
-			enabled: true,
-		},
-		speedInsights: {
-			enabled: true,
-		},
 		imageService: true,
 		devImageService: 'sharp',
 		maxDuration: 10,
+		includeFiles: ['./src/lib/i18n/translations.ts'],
+		excludeFiles: ['./src/components/IntroCard.astro'],
 	}),
 });
