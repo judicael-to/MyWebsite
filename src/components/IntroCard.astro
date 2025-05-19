@@ -81,11 +81,7 @@ const nameHtml = wrapWithMixedFontSpans(name);
   }
   
   .font-transition {
-    transition: font-family 1.5s ease-in-out, 
-                font-weight 1.5s ease-in-out,
-                font-style 1.5s ease-in-out,
-                transform 1.5s ease-in-out,
-                color 1.5s ease-in-out;
+    transition: color 0.3s ease-in-out;
   }
   
   .judicael-name span {
@@ -173,13 +169,27 @@ const nameHtml = wrapWithMixedFontSpans(name);
           
           // Move to next character
           currentIndex = (currentIndex + 1) % spans.length;
+
+          // If we've completed one full loop, reset to first character after 10s
+          if (currentIndex === 0) {
+            // Clear the current interval
+            if (fontInterval) {
+              clearInterval(fontInterval);
+              fontInterval = null;
+            }
+            // Set a new interval after 10 seconds
+            setTimeout(() => {
+              currentIndex = 0; // Reset to first character
+              fontInterval = window.setInterval(changeCharacter, 100);
+            }, 10000);
+          }
         } catch (err) {
           console.error("Error changing character:", err);
         }
       }
 
       // Change a character every 200ms
-      fontInterval = window.setInterval(changeCharacter, 200);
+      fontInterval = window.setInterval(changeCharacter, 100);
     } catch (error) {
       console.error("Error in font shuffler:", error);
     }
