@@ -9,27 +9,6 @@ interface Props {
 }
 
 const { title, description, page } = Astro.props;
-
-try {
-  // Your existing code here
-} catch (error) {
-  console.error('Error in Layout component:', error);
-  // Fallback to a basic layout if there's an error
-  return (
-    <html>
-      <head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </head>
-      <body>
-        <div class="error-container">
-          <h1>Something went wrong</h1>
-          <p>Please try refreshing the page</p>
-        </div>
-      </body>
-    </html>
-  );
-}
 ---
 
 <BasicLayout title={title} description={description}>
@@ -52,3 +31,21 @@ try {
     padding: 2rem;
   }
 </style>
+
+<script>
+  // Add error handling for client-side rendering
+  document.addEventListener('astro:page-load', () => {
+    try {
+      // Your client-side code here
+    } catch (error) {
+      console.error('Error in client-side rendering:', error);
+      const errorContainer = document.createElement('div');
+      errorContainer.className = 'error-container';
+      errorContainer.innerHTML = `
+        <h1>Something went wrong</h1>
+        <p>Please try refreshing the page</p>
+      `;
+      document.body.appendChild(errorContainer);
+    }
+  });
+</script>
