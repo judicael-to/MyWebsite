@@ -67,6 +67,16 @@ export const translations: Languages = {
 };
 
 export function getTranslation(key: TranslationKey, lang: string = 'fr'): string {
-  const language = translations[lang] || translations.fr;
-  return language[key] || translations.fr[key];
+  try {
+    const language = translations[lang] || translations.fr;
+    const translation = language[key];
+    if (!translation) {
+      console.warn(`Missing translation for key "${key}" in language "${lang}"`);
+      return translations.fr[key] || key;
+    }
+    return translation;
+  } catch (error) {
+    console.error(`Error getting translation for key "${key}" in language "${lang}":`, error);
+    return key;
+  }
 } 

@@ -33,7 +33,6 @@ export default defineConfig({
 		imageService: true,
 		devImageService: 'sharp',
 		maxDuration: 10,
-		includeFiles: ['./src/lib/i18n/translations.ts'],
-		excludeFiles: ['./src/components/IntroCard.astro'],
+		includeFiles: ['./src/lib/i18n/translations.ts']
 	}),
 });
