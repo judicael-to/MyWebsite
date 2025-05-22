@@ -10,13 +10,13 @@ import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://judicaelto.fr/',
+	site: 'https://www.judicaelto.fr/',
 	integrations: [
 		sitemap(),
 		robotsTxt({
 			sitemap: [
-				'https://judicaelto.com/sitemap-index.xml',
-				'https://judicaelto.com/sitemap-0.xml',
+				'https://www.judicaelto.fr/sitemap-index.xml',
+				'https://www.judicaelto.fr/sitemap-0.xml',
 			],
 		}),
 		solidJs(),
