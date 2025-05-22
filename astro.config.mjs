@@ -32,7 +32,11 @@ export default defineConfig({
 	adapter: vercel({
 		imageService: true,
 		devImageService: 'sharp',
-		maxDuration: 10,
-		includeFiles: ['./src/lib/i18n/translations.ts']
+		maxDuration: 30,
+		includeFiles: [
+			'./src/lib/i18n/translations.ts',
+			'./src/components/**/*',
+			'./src/layouts/**/*'
+		]
 	}),
 });
