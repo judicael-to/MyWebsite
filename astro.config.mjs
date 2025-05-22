@@ -10,7 +10,7 @@ import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://judicaelto.com/',
+	site: 'https://judicaelto.fr/',
 	integrations: [
 		sitemap(),
 		robotsTxt({
