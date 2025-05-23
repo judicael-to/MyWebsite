@@ -1,0 +1,79 @@
+---
+import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
+import { getTranslation } from "../lib/i18n/translations";
+import Content from "./Card/Content.astro";
+import RandomFactComponent from "./RandomFact/index";
+
+const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
+---
+
+<Card colSpan="md:col-span-2" rowSpan="md:row-span-2" gradient={2}>
+  <div class="flex flex-col gap-2">
+    <div class="text-xl font-bold">
+      <Content title="about.title" />
+    </div>
+    <div class="random-fact-container">
+      <RandomFactComponent client:load />
+    </div>
+  </div>
+</Card>
+
+<style>
+  .random-fact-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .random-fact-container :global(button) {
+    background-color: var(--button-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .random-fact-container :global(button:hover) {
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 var(--shadow-color);
+  }
+
+  .random-fact-container :global(button:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 2px 2px 0 var(--shadow-color);
+  }
+</style>
+
+<script>
+  import { getTranslation } from "../lib/i18n/translations";
+
+  function updateTranslations(lang: string) {
+    const title = document.querySelector('.random-title');
+    if (title) {
+      title.textContent = getTranslation('about.title', lang);
+    }
+  }
+
+  // Initialize translations as soon as possible
+  updateTranslations(document.documentElement.lang || localStorage.getItem('language') || 'fr');
+
+  // Update translations when language changes
+  window.addEventListener('languagechange', (event) => {
+    const lang = (event as CustomEvent).detail.language;
+    console.log('RandomFact received language change event:', lang);
+    updateTranslations(lang);
+  });
+
+  // Also update translations when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'fr';
+    console.log('RandomFact DOM loaded, updating with language:', currentLang);
+    updateTranslations(currentLang);
+  });
+</script> 
