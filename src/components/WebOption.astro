@@ -3,7 +3,7 @@ import Card from "./Card/index.astro";
 import { Icon } from "astro-icon/components";
 import { getTranslation } from "../lib/i18n/translations";
 
-const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
 ---
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-2" gradient={2}>

@@ -18,7 +18,7 @@
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/solid-js": "^5.0.10",
-    "@astrojs/vercel": "^8.1.4",
+    "@astrojs/vercel": "^8.0.4",
     "@iconify-json/ri": "^1.1.20",
     "@iconify-json/simple-icons": "^1.2.34",
     "astro": "^5.7.13",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
-    "@unocss/astro": "^0.58.5",
+    "@unocss/astro": "^66.1.2",
     "@unocss/postcss": "^0.58.5",
     "@unocss/preset-uno": "^0.58.5",
     "@unocss/reset": "^0.58.5",
@@ -40,6 +40,6 @@
     "markdown-it": "^14.0.0",
     "motion": "^10.17.0",
     "sanitize-html": "^2.12.1",
-    "unocss": "^0.58.5"
+    "unocss": "^66.1.2"
   }
 }

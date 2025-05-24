@@ -11,6 +11,11 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://www.judicaelto.fr/',
+	trailingSlash: 'never',
+	compressHTML: true,
+	build: {
+		format: 'directory'
+	},
 	integrations: [
 		sitemap(),
 		robotsTxt({
