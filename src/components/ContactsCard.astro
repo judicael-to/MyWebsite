@@ -3,7 +3,7 @@ import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 import { getTranslation } from "../lib/i18n/translations";
 
-const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
 const contactTitle = getTranslation('contact.title', currentLang);
 ---
 
@@ -56,6 +56,10 @@ const contactTitle = getTranslation('contact.title', currentLang);
     }
   }
 
+  // Initialize translations as soon as possible
+  const initialLang = localStorage.getItem('language') || document.documentElement.lang || 'fr';
+  updateTranslations(initialLang);
+
   // Update translations when language changes
   window.addEventListener('languagechange', (event) => {
     const lang = (event as CustomEvent).detail.language;
@@ -64,7 +68,7 @@ const contactTitle = getTranslation('contact.title', currentLang);
 
   // Also update translations when the page loads
   document.addEventListener('DOMContentLoaded', () => {
-    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'fr';
+    const currentLang = localStorage.getItem('language') || document.documentElement.lang || 'fr';
     updateTranslations(currentLang);
   });
 </script>

@@ -5,7 +5,7 @@ import { getTranslation } from "../lib/i18n/translations";
 import Content from "./Card/Content.astro";
 import RandomFactComponent from "./RandomFact/index";
 
-const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem('language') || 'fr';
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
 ---
 
 <Card colSpan="md:col-span-2" rowSpan="md:row-span-2" gradient={2}>
@@ -61,7 +61,8 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
   }
 
   // Initialize translations as soon as possible
-  updateTranslations(document.documentElement.lang || localStorage.getItem('language') || 'fr');
+  const initialLang = localStorage.getItem('language') || document.documentElement.lang || 'fr';
+  updateTranslations(initialLang);
 
   // Update translations when language changes
   window.addEventListener('languagechange', (event) => {
@@ -72,7 +73,7 @@ const currentLang = Astro.cookies.get('language')?.value || localStorage.getItem
 
   // Also update translations when the page loads
   document.addEventListener('DOMContentLoaded', () => {
-    const currentLang = document.documentElement.lang || localStorage.getItem('language') || 'fr';
+    const currentLang = localStorage.getItem('language') || document.documentElement.lang || 'fr';
     console.log('RandomFact DOM loaded, updating with language:', currentLang);
     updateTranslations(currentLang);
   });
