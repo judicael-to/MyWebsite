@@ -15,7 +15,17 @@ export type TranslationKey =
   | 'about.passions.music'
   | 'blog.title'
   | 'birthday.countdown'
-  | 'welcome';
+  | 'welcome'
+  | 'intro.title'
+  | 'intro.subtitle'
+  | 'contact.form.title'
+  | 'contact.form.name'
+  | 'contact.form.email'
+  | 'contact.form.subject'
+  | 'contact.form.message'
+  | 'contact.form.submit'
+  | 'contact.form.success'
+  | 'contact.form.error';
 
 type Translations = {
   [key in TranslationKey]: string;
@@ -43,7 +53,17 @@ export const translations: Languages = {
     'about.passions.music': 'Music',
     'blog.title': 'My Blog',
     'birthday.countdown': 'Time before my birthday:',
-    'welcome': 'WELCOME.'
+    'welcome': 'WELCOME.',
+    'intro.title': 'Introduction',
+    'intro.subtitle': 'Subtitle',
+    'contact.form.title': 'Contact Me',
+    'contact.form.name': 'Name',
+    'contact.form.email': 'Email',
+    'contact.form.subject': 'Subject',
+    'contact.form.message': 'Message',
+    'contact.form.submit': 'Send',
+    'contact.form.success': 'Message sent successfully!',
+    'contact.form.error': 'An error occurred. Please try again.'
   },
   fr: {
     'theme.dark': 'Sombre',
@@ -62,7 +82,17 @@ export const translations: Languages = {
     'about.passions.music': 'Musique',
     'blog.title': 'Mon Blog',
     'birthday.countdown': 'Temps avant mon anniversaire :',
-    'welcome': 'BIENVENUE.'
+    'welcome': 'BIENVENUE.',
+    'intro.title': 'Introduction',
+    'intro.subtitle': 'Sous-titre',
+    'contact.form.title': 'Contactez-moi',
+    'contact.form.name': 'Nom',
+    'contact.form.email': 'Email',
+    'contact.form.subject': 'Sujet',
+    'contact.form.message': 'Message',
+    'contact.form.submit': 'Envoyer',
+    'contact.form.success': 'Message envoyé avec succès !',
+    'contact.form.error': 'Une erreur est survenue. Veuillez réessayer.'
   }
 };
 

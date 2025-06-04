@@ -3,10 +3,11 @@ import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card/index.astro";
 import IntroCard from "../components/IntroCard.astro";
 import ContactsCard from "../components/ContactsCard.astro";
-import RandomFact from "../components/RandomFact.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
 import WebOption from "../components/WebOption.astro";
+import RandomFact from "../components/RandomFact.astro";
+import ContactForm from "../components/ContactForm.astro";
 import { getTranslation } from "../lib/i18n/translations";
 
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
@@ -56,8 +57,8 @@ const blogTitle = getTranslation('blog.title', currentLang);
       <h2 class="blog-title text-xl font-bold" data-translation-key="blog.title">{blogTitle}</h2>
     </Card>
     
-    
     <RandomFact />
+    
     <Card colSpan="md:col-span-4" rowSpan="md:row-span-1" gradient={8}>
       <p class="text-xs">
         © 2024 · Crafted with ♥️ using <a
@@ -68,6 +69,8 @@ const blogTitle = getTranslation('blog.title', currentLang);
       </p>
     </Card>
   </main>
+  
+  <ContactForm />
 </Layout>
 
 <script>
@@ -93,4 +96,20 @@ const blogTitle = getTranslation('blog.title', currentLang);
     const lang = document.documentElement.lang || 'fr';
     updateTranslations(lang);
   });
+
+  // Add event listeners for showing/hiding the contact form
+  const contactForm = document.querySelector('.contact-form-card');
+
+  if (contactForm) {
+    window.addEventListener('showContactForm', () => {
+      setTimeout(() => {
+        contactForm.classList.add('show');
+      }, 1000); // 0.5 second delay
+    });
+
+    window.addEventListener('hideContactForm', () => {
+      contactForm.classList.remove('show');
+    });
+  }
+
 </script>

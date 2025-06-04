@@ -1,0 +1,175 @@
+---
+import Card from "./Card/index.astro";
+import { getTranslation, type TranslationKey } from "../lib/i18n/translations";
+
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
+---
+
+<div class="contact-form-card">
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center">
+    <div class="w-full max-w-2xl mx-4">
+      <Card colSpan="md:col-span-4" rowSpan="md:row-span-8" gradient={1}>
+        <div class="flex flex-col h-full">
+          <div class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold text-primary">{getTranslation('contact.form.title', currentLang)}</h1>
+            <button id="close-contact-form" class="text-primary hover:opacity-80 transition-opacity">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          
+          <form id="contact-form" class="flex flex-col gap-6">
+            <div class="flex flex-col gap-2">
+              <label for="name" class="text-primary">{getTranslation('contact.form.name', currentLang)}</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="bg-background-secondary text-primary p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="email" class="text-primary">{getTranslation('contact.form.email', currentLang)}</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="bg-background-secondary text-primary p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="subject" class="text-primary">{getTranslation('contact.form.subject', currentLang)}</label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                required
+                class="bg-background-secondary text-primary p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="message" class="text-primary">{getTranslation('contact.form.message', currentLang)}</label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="6"
+                class="bg-background-secondary text-primary p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="bg-primary text-background-primary py-3 px-6 rounded-lg font-bold hover:opacity-90 transition-opacity mt-4"
+            >
+              {getTranslation('contact.form.submit', currentLang)}
+            </button>
+          </form>
+        </div>
+      </Card>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { getTranslation, type TranslationKey } from "../lib/i18n/translations";
+
+  const fieldTranslations: Record<string, TranslationKey> = {
+    name: 'contact.form.name',
+    email: 'contact.form.email',
+    subject: 'contact.form.subject',
+    message: 'contact.form.message'
+  };
+
+  function updateTranslations(lang: string) {
+    const title = document.querySelector('.contact-form-card h1');
+    const labels = document.querySelectorAll('.contact-form-card label');
+    const submitButton = document.querySelector('.contact-form-card button[type="submit"]');
+    
+    if (title) {
+      title.textContent = getTranslation('contact.form.title', lang);
+    }
+    
+    labels.forEach(label => {
+      const key = label.getAttribute('for');
+      if (key && key in fieldTranslations) {
+        label.textContent = getTranslation(fieldTranslations[key], lang);
+      }
+    });
+    
+    if (submitButton) {
+      submitButton.textContent = getTranslation('contact.form.submit', lang);
+    }
+  }
+
+  // Update when language changes
+  window.addEventListener('languagechange', (event) => {
+    const lang = (event as CustomEvent).detail.language;
+    updateTranslations(lang);
+  });
+
+  // Also update on page load
+  document.addEventListener('astro:page-load', () => {
+    const lang = document.documentElement.lang || 'fr';
+    updateTranslations(lang);
+  });
+
+  // Form submission handling
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        
+        if (response.ok) {
+          alert(getTranslation('contact.form.success', document.documentElement.lang || 'fr'));
+          form.reset();
+        } else {
+          throw new Error('Failed to send message');
+        }
+      } catch (error) {
+        alert(getTranslation('contact.form.error', document.documentElement.lang || 'fr'));
+      }
+    });
+  }
+
+  // Close button handling
+  const closeButton = document.getElementById('close-contact-form');
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('hideContactForm'));
+    });
+  }
+</script>
+
+<style>
+  .contact-form-card {
+    display: none;
+    opacity: 0;
+
+  }
+
+  .contact-form-card.show {
+    display: flex;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+</style> 

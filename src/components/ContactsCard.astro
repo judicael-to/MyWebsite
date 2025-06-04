@@ -1,7 +1,8 @@
 ---
 import Card from "./Card/index.astro";
-import { LINKS } from "../lib/constants";
+import Button from "./Button.astro";
 import { getTranslation } from "../lib/i18n/translations";
+import { Icon } from "astro-icon/components";
 
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
 const contactTitle = getTranslation('contact.title', currentLang);
@@ -20,18 +21,12 @@ const contactTitle = getTranslation('contact.title', currentLang);
     </div>
     <div class="background-secondary hidden md:block w-[1px] h-[80%]"></div>
     <div class="flex flex-col">
-      <h2 class="contact-socials text-secondary">{getTranslation('contact.socials', currentLang)}</h2>
-      <ul>
-        <li>
-          <a href={LINKS.github} target="_blank">Github</a>
-        </li>
-        <li>
-          <a href={LINKS.discord} target="_blank">Discord</a>
-        </li>
-        <li>
-          <a href={LINKS.linkedin} target="_blank">Linkedin</a>
-        </li>
-      </ul>
+      <div class="w-16 h-16 flex items-center justify-center">
+        <Button aria-label="email" id="show-contact-form">
+          <Icon name="ri:send-plane-fill" class="h-8 w-8" />
+          <span class="sr-only">Email</span>
+        </Button>
+      </div>
     </div>
   </div>
 </Card>
@@ -40,19 +35,14 @@ const contactTitle = getTranslation('contact.title', currentLang);
   import { getTranslation } from "../lib/i18n/translations";
 
   function updateTranslations(lang: string) {
-    // Get all elements that need translation using specific class selectors
     const titleHeading = document.querySelector('.contact-title');
     const detailsHeading = document.querySelector('.contact-details');
-    const socialsHeading = document.querySelector('.contact-socials');
 
     if (titleHeading) {
       titleHeading.textContent = getTranslation('contact.title', lang);
     }
     if (detailsHeading) {
       detailsHeading.textContent = getTranslation('contact.details', lang);
-    }
-    if (socialsHeading) {
-      socialsHeading.textContent = getTranslation('contact.socials', lang);
     }
   }
 
@@ -71,6 +61,20 @@ const contactTitle = getTranslation('contact.title', currentLang);
     const currentLang = localStorage.getItem('language') || document.documentElement.lang || 'fr';
     updateTranslations(currentLang);
   });
+
+  // Contact form handling
+  const showButton = document.getElementById('show-contact-form');
+  const contactForm = document.querySelector('.contact-form-card');
+
+  if (showButton && contactForm) {
+    showButton.addEventListener('click', () => {
+      contactForm.classList.add('show');
+    });
+
+    window.addEventListener('hideContactForm', () => {
+      contactForm.classList.remove('show');
+    });
+  }
 </script>
 
 <style>
