@@ -1,6 +1,6 @@
 ---
-import type { TranslationKey } from "../../lib/i18n/translations";
-import { getTranslation } from "../../lib/i18n/translations";
+import type { TranslationKey } from "../../../lib/i18n/translations";
+import { getTranslation } from "../../../lib/i18n/translations";
 
 interface Props {
   title?: TranslationKey;
@@ -22,8 +22,8 @@ const translatedTitle = title ? getTranslation(title, currentLang) : '';
 <slot />
 
 <script>
-  import type { TranslationKey } from "../../lib/i18n/translations";
-  import { getTranslation } from "../../lib/i18n/translations";
+  import type { TranslationKey } from "../../../lib/i18n/translations";
+  import { getTranslation } from "../../../lib/i18n/translations";
 
   function updateTitle(element: HTMLElement, translationKey: TranslationKey, lang: string) {
     if (!element || !translationKey) return;

@@ -1,0 +1,41 @@
+---
+import type { Project } from "../types/index";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<div class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-lg overflow-hidden hover:shadow-lg transition-shadow p-6">
+  {project.imageUrl && (
+    <img src={project.imageUrl} alt={project.title} class="w-full h-40 object-cover rounded mb-4" />
+  )}
+  <h3 class="text-xl font-bold text-primary mb-2">{project.title}</h3>
+  <p class="text-[var(--text-secondary)] mb-4">{project.description}</p>
+  
+  <div class="flex flex-wrap gap-2 mb-4">
+    {project.technologies.map((tech: string) => (
+      <span class="text-xs bg-[var(--primary)] text-white px-2 py-1 rounded">
+        {tech}
+      </span>
+    ))}
+  </div>
+  
+  <div class="flex gap-3">
+    {project.demoUrl && (
+      <a href={project.demoUrl} target="_blank" class="flex items-center gap-1 text-primary hover:underline">
+        <Icon name="ri:external-link-line" class="h-4" />
+        Demo
+      </a>
+    )}
+    {project.repoUrl && (
+      <a href={project.repoUrl} target="_blank" class="flex items-center gap-1 text-primary hover:underline">
+        <Icon name="ri:github-fill" class="h-4" />
+        Code
+      </a>
+    )}
+  </div>
+</div>

@@ -1,12 +1,12 @@
 ---
-import Card from "./Card/index.astro";
-import Button from "./Button.astro";
-import { LINKS } from "../lib/constants";
+import Card from "../ui/Card/index.astro";
+import Button from "../ui/Button.astro";
+import { LINKS } from "../../lib/constants";
 import { Icon } from "astro-icon/components";
-import Tooltip from "./Tooltip/index";
-import { getTranslation } from "../lib/i18n/translations";
-import Content from "./Card/Content.astro";
-import MixedFontStyles from "./Card/MixedFontStyles.astro";
+import Tooltip from "../ui/Tooltip/index";
+import { getTranslation } from "../../lib/i18n/translations";
+import Content from "../ui/Card/Content.astro";
+import MixedFontStyles from "../ui/Card/MixedFontStyles.astro";
 
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
 const name = "JUDICAEL";
@@ -42,20 +42,17 @@ const nameHtml = wrapWithMixedFontSpans(name);
         <a href={LINKS.github} aria-label="github profile" target="_blank" class="transition-transform hover:scale-105">
           <Button aria-label="github profile">
             <Icon name="ri:github-fill" class="h-6" />
-            <span class="sr-only">GitHub Profile</span>
           </Button>
         </a>
         <a href={LINKS.linkedin} aria-label="linkedin profile" target="_blank" class="transition-transform hover:scale-105">
           <Button aria-label="linkedin profile">
             <Icon name="ri:linkedin-box-fill" class="h-6" />
-            <span class="sr-only">Linkedin Profile</span>
           </Button>
         </a>
         <div class="transition-transform hover:scale-105">
           <Tooltip client:visible>
             <Button aria-label="easter egg btn">
               <Icon name="ri:emotion-laugh-line" class="h-6" />
-              <span class="sr-only">Easter egg button</span>
             </Button>
           </Tooltip>
         </div>
@@ -65,17 +62,13 @@ const nameHtml = wrapWithMixedFontSpans(name);
       width="300"
       height="300"
       src="/me.webp"
-      class="w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none"
+      class="w-auto max-h-[300px] select-none md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none transition-opacity hover:opacity-95 mx-auto md:mx-0 mt-4 md:mt-0"
       alt="memoji of judicael"
     />
   </div>
 </Card>
 
 <style>
-  .text-secondary {
-    color: var(--text-secondary);
-  }
-  
   .text-primary {
     color: var(--text-primary);
   }
@@ -89,23 +82,4 @@ const nameHtml = wrapWithMixedFontSpans(name);
     position: relative;
     padding: 0 2px;
   }
-
 </style>
-
-<script>
-  import { getTranslation } from "../lib/i18n/translations";
-
-  function updateTranslations(lang: string) {
-    // Get all elements that need translation using specific class selectors
-    const description = document.querySelector('.intro-description');
-
-    try {
-      if (description) {
-        const descText = getTranslation('intro.description', lang);
-        description.textContent = descText;
-      }
-    } catch (error) {
-      console.error('Error updating translations:', error);
-    }
-  }
-</script>

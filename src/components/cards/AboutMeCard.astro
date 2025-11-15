@@ -1,8 +1,8 @@
 ---
-import Card from "./Card/index.astro";
+import Card from "../ui/Card/index.astro";
 import { Icon } from "astro-icon/components";
-import { getTranslation } from "../lib/i18n/translations";
-import Content from "./Card/Content.astro";
+import { getTranslation } from "../../lib/i18n/translations";
+import Content from "../ui/Card/Content.astro";
 
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
 ---
@@ -63,7 +63,7 @@ const currentLang = Astro.cookies.get('language')?.value || 'fr';
 </style>
 
 <script>
-  import { getTranslation } from "../lib/i18n/translations";
+  import { getTranslation } from "../../lib/i18n/translations";
 
   function updateTranslations(lang: string) {
     // Get all elements using specific classes

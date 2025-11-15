@@ -1,0 +1,29 @@
+---
+import IntroCard from "../cards/IntroCard.astro";
+import WebOptionCard from "../cards/WebOptionCard.astro";
+import AboutMeCard from "../cards/AboutMeCard.astro";
+import NowCard from "../cards/NowCard.astro";
+import ContactsCard from "../cards/ContactsCard.astro";
+import BlogCard from "../cards/BlogCard.astro";
+import RandomFactCard from "../cards/RandomFactCard.astro";
+import FooterCard from "../cards/FooterCard.astro";
+---
+
+<section class="w-full p-2 sm:p-4 md:p-8 py-12">
+  <div class="m-auto grid gap-2 max-w-6xl overflow-hidden relative w-full sm:gap-2 md:grid-cols-2 md:gap-3 lg:grid-cols-4 lg:gap-4">
+    <IntroCard />
+    <WebOptionCard />
+    <AboutMeCard />
+    <NowCard />
+    <ContactsCard />
+    <BlogCard />
+    <RandomFactCard />
+    <FooterCard />
+  </div>
+</section>
+
+<style>
+  section {
+    scroll-snap-align: start;
+  }
+</style>

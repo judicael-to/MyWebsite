@@ -1,0 +1,16 @@
+---
+import Card from "../ui/Card/index.astro";
+import { getTranslation } from "../../lib/i18n/translations";
+
+const currentLang = Astro.cookies.get('language')?.value || 'fr';
+const blogTitle = getTranslation('blog.title', currentLang);
+---
+
+<Card
+  colSpan="md:col-span-1"
+  rowSpan="md:row-span-2"
+  href="/blog"
+  gradient={6}
+>
+  <h2 class="blog-title text-xl font-bold" data-translation-key="blog.title">{blogTitle}</h2>
+</Card>

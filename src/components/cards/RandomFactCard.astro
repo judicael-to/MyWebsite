@@ -1,6 +1,6 @@
 ---
-import Card from "./Card/index.astro";
-import { getTranslation } from "../lib/i18n/translations";
+import Card from "../ui/Card/index.astro";
+import { getTranslation } from "../../lib/i18n/translations";
 
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
 ---
@@ -12,7 +12,7 @@ const currentLang = Astro.cookies.get('language')?.value || 'fr';
 </Card>
 
 <script>
-  import { getTranslation } from "../lib/i18n/translations";
+  import { getTranslation } from "../../lib/i18n/translations";
 
   function updateTranslations(lang: string) {
     const title = document.querySelector('.text-xl.font-bold');
@@ -32,4 +32,4 @@ const currentLang = Astro.cookies.get('language')?.value || 'fr';
     const lang = document.documentElement.lang || 'fr';
     updateTranslations(lang);
   });
-</script> 
+</script>

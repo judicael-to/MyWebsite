@@ -1,7 +1,7 @@
 ---
-import Card from "./Card/index.astro";
+import Card from "../ui/Card/index.astro";
 import { Icon } from "astro-icon/components";
-import { getTranslation } from "../lib/i18n/translations";
+import { getTranslation } from "../../lib/i18n/translations";
 
 const currentLang = Astro.cookies.get('language')?.value || 'fr';
 ---
@@ -28,7 +28,7 @@ const currentLang = Astro.cookies.get('language')?.value || 'fr';
 </Card>
 
 <script>
-  import { getTranslation } from "../lib/i18n/translations";
+  import { getTranslation } from "../../lib/i18n/translations";
 
   const themeToggle = document.getElementById('themeToggle');
   const themeText = document.querySelector('.theme-text');
