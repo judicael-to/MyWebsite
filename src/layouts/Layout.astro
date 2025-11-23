@@ -1,51 +1,58 @@
 ---
-import BasicLayout from "./BasicLayout.astro";
-import "../styles/theme.css";
+import "../styles/global.css";
 
 interface Props {
-  title: string;
-  description: string;
-  page?: "travel";
+    title: string;
 }
 
-const { title, description, page } = Astro.props;
+const { title } = Astro.props;
 ---
 
-<BasicLayout title={title} description={description}>
-  <div
-    slot="loader"
-    class="loader bg-darkslate-700 text-neutral-50 text-3xl font-black uppercase flex justify-center items-center w-screen h-screen z-50 fixed top-0 bottom-0 right-0 left-0 opacity-0 pointer-events-none"
-  >
-  </div>
-  <slot />
-</BasicLayout>
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Judicael Portfolio" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
 
-<style>
-  .error-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-    padding: 2rem;
-  }
-</style>
+        <!-- Font Awesome for Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
 
-<script>
-  // Add error handling for client-side rendering
-  document.addEventListener('astro:page-load', () => {
-    try {
-      // Your client-side code here
-    } catch (error) {
-      console.error('Error in client-side rendering:', error);
-      const errorContainer = document.createElement('div');
-      errorContainer.className = 'error-container';
-      errorContainer.innerHTML = `
-        <h1>Something went wrong</h1>
-        <p>Please try refreshing the page</p>
-      `;
-      document.body.appendChild(errorContainer);
-    }
-  });
-</script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+            rel="stylesheet"
+        />
+
+        <script is:inline>
+            // Check for dark mode preference
+            if (
+                localStorage.getItem("theme") === "dark" ||
+                (!("theme" in localStorage) &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        </script>
+    </head>
+    <body
+        class="bg-[#fdfbf7] dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-500 bg-dot-pattern min-h-screen"
+    >
+        <slot />
+        <div
+            class="fixed bottom-4 left-4 text-xl font-medium text-slate-400 dark:text-slate-500 z-50"
+        >
+            welcome.
+        </div>
+    </body>
+</html>
