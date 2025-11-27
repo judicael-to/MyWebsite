@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* Rebuild trigger */
 @config "../../tailwind.config.mjs";
 
 /* Hide scrollbar for Chrome, Safari and Opera */
