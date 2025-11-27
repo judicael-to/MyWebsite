@@ -4,8 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run clean && astro build",
     "preview": "astro preview",
+    "clean": "rm -rf .vercel dist",
     "astro": "astro"
   },
   "dependencies": {
