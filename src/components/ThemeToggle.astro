@@ -3,98 +3,244 @@
 ---
 
 <div
-    class="glass-card col-span-1 md:col-span-1 md:row-span-1 bg-sky-100 dark:bg-sky-900/40 rounded-3xl p-6 opacity-0 animate-drop-bounce delay-200 flex flex-col justify-center items-center text-center relative overflow-hidden"
+  class="glass-card col-span-1 md:col-span-1 md:row-span-1 bg-sky-100 dark:bg-sky-900/40 rounded-3xl p-6 opacity-0 animate-drop-bounce delay-200 flex flex-col justify-center items-center text-center relative overflow-hidden"
 >
-    <div class="absolute top-4 right-4">
-        <i
-            class="fas fa-cog text-sky-900/20 dark:text-sky-100/20 text-6xl rotate-45"
-        ></i>
+  <div class="absolute top-4 right-4">
+    <i
+      class="fas fa-cog text-sky-900/20 dark:text-sky-100/20 text-6xl rotate-45"
+    ></i>
+  </div>
+  <p
+    class="text-sm font-semibold uppercase tracking-wider text-sky-900 dark:text-sky-100 mb-4"
+    data-i18n="settings"
+  >
+    Settings
+  </p>
+
+  <!-- Dark Mode Toggle -->
+  <button
+    id="theme-toggle"
+    class="relative w-full h-10 bg-white/50 dark:bg-black/30 rounded-full p-1 flex items-center cursor-pointer"
+  >
+    <div
+      class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-sky-300 dark:bg-sky-800 rounded-full shadow-sm transition-transform duration-300"
+      id="toggle-circle"
+    >
     </div>
-    <p
-        class="text-sm font-semibold uppercase tracking-wider text-sky-900 dark:text-sky-100 mb-4"
+    <span
+      class="flex-1 text-xs font-bold relative z-10 text-center"
+      data-i18n="light">Light</span
     >
-        Settings
-    </p>
+    <span
+      class="flex-1 text-xs font-bold relative z-10 text-center"
+      data-i18n="dark">Dark</span
+    >
+  </button>
 
-    <!-- Dark Mode Toggle -->
-    <button
-        id="theme-toggle"
-        class="relative w-full h-10 bg-white/50 dark:bg-black/30 rounded-full p-1 flex items-center cursor-pointer"
+  <!-- Language Toggle -->
+  <button
+    id="lang-toggle"
+    class="relative w-full h-10 bg-white/50 dark:bg-black/30 rounded-full p-1 flex items-center cursor-pointer mt-2"
+  >
+    <div
+      class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-sky-300 dark:bg-sky-800 rounded-full shadow-sm transition-transform duration-300"
+      id="lang-circle"
     >
-        <div
-            class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-sky-300 dark:bg-sky-800 rounded-full shadow-sm transition-transform duration-300"
-            id="toggle-circle"
-        >
-        </div>
-        <span class="flex-1 text-xs font-bold relative z-10 text-center"
-            >Light</span
-        >
-        <span class="flex-1 text-xs font-bold relative z-10 text-center"
-            >Dark</span
-        >
-    </button>
-
-    <!-- Language Toggle -->
-    <button
-        id="lang-toggle"
-        class="relative w-full h-10 bg-white/50 dark:bg-black/30 rounded-full p-1 flex items-center cursor-pointer mt-2"
-    >
-        <div
-            class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-sky-300 dark:bg-sky-800 rounded-full shadow-sm transition-transform duration-300"
-            id="lang-circle"
-        >
-        </div>
-        <span class="flex-1 text-xs font-bold relative z-10 text-center"
-            >EN</span
-        >
-        <span class="flex-1 text-xs font-bold relative z-10 text-center"
-            >FR</span
-        >
-    </button>
+    </div>
+    <span class="flex-1 text-xs font-bold relative z-10 text-center">EN</span>
+    <span class="flex-1 text-xs font-bold relative z-10 text-center">FR</span>
+  </button>
 </div>
 
 <script>
-    // Theme Toggle Logic
-    const themeToggleBtn = document.getElementById("theme-toggle");
-    const toggleCircle = document.getElementById("toggle-circle");
-    const htmlElement = document.documentElement;
+  // @ts-nocheck
+  // 1. Define your translations
+  const translations = {
+    en: {
+      hi_i_am: "Hi, I am",
+      profile_desc:
+        "As a computer science student at Paris-Saclay, I enjoy designing comprehensive solutions and tackling technical challenges. I am always eager to learn and discover new technologies.",
+      about_me: "About me",
+      primary_tools: "Primary Tools",
+      passions: "Passions",
+      coding: "Coding",
+      design: "Design",
+      tennis: "Tennis",
+      music: "Music",
+      now: "Now",
+      status_desc:
+        "Currently working on an application project for creating tutorial and practical work groups.",
+      lets_talk: "Let's talk!",
+      my_projects: "My Projects",
+      internship: "Internship",
+      open_to_work: "Open to Work",
+      looking_for_internship: "Looking for a 3-month opportunity",
+      internship_date: "Apr - Jul 2026",
+      settings: "Settings",
+      light: "Light",
+      dark: "Dark",
+      works: "WORKS",
+      featured_projects: "Featured Projects",
+      proj1_title: "TensorFlow ML Model",
+      proj1_tags: "Python • TensorFlow • Pandas",
+      proj1_desc:
+        "A machine learning model capable of predicting housing prices with 95% accuracy using historical data.",
+      proj2_title: "E-Commerce App",
+      proj2_tags: "React Native • Firebase",
+      proj2_desc:
+        "Full-featured mobile shopping application with real-time inventory and secure payment gateway.",
+      proj3_title: "Sophrology Website",
+      proj3_tags: "Astro • Tailwind CSS",
+      proj3_desc:
+        "A modern and serene website for a sophrology practitioner, featuring appointment booking and blog integration.",
+      toolbox_title: "My Digital Toolbox",
+      toolbox_desc:
+        "I believe in choosing the right tool for the job. While I specialize in Python and C for backend logic, I love crafting beautiful interfaces with modern web technologies.",
+      download_cv: "Download CV",
+      skill_python_desc: "Advanced Data Analysis",
+      skill_c_desc: "System Programming",
+      skill_design_title: "Design",
+      skill_design_desc: "UI/UX Prototyping",
+      skill_backend_title: "Backend",
+      skill_backend_desc: "SQL & APIs",
+      contact_title: "Ready to start a project?",
+      contact_desc:
+        "Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+      name_placeholder: "Name",
+      email_placeholder: "Email",
+      subject_placeholder: "Subject",
+      message_placeholder: "Message",
+      send_message: "Send Message",
+      footer_crafted: "Crafted with",
+      footer_by: "by",
+    },
+    fr: {
+      hi_i_am: "Salut, je suis",
+      profile_desc:
+        "Étudiant en informatique à Paris-Saclay, j'aime concevoir des solutions complètes et relever des défis techniques. Toujours désireux d'apprendre et de découvrir de nouvelles technologies.",
+      about_me: "À propos de moi",
+      primary_tools: "Outils Principaux",
+      passions: "Passions",
+      coding: "Programmation",
+      design: "Design",
+      tennis: "Tennis",
+      music: "Musique",
+      now: "Maintenant",
+      status_desc:
+        "Actuellement sur un projet d'application pour créer des groupes de TD et TP.",
+      lets_talk: "Parlons-en !",
+      my_projects: "Mes Projets",
+      internship: "Stage",
+      open_to_work: "À la recherche",
+      looking_for_internship: "À la recherche d'un stage de 3 mois",
+      internship_date: "Avr - Jui 2026",
+      settings: "Paramètres",
+      light: "Clair",
+      dark: "Sombre",
+      works: "PROJETS",
+      featured_projects: "Projets Phares",
+      proj1_title: "Modèle ML TensorFlow",
+      proj1_tags: "Python • TensorFlow • Pandas",
+      proj1_desc:
+        "Modèle d'apprentissage automatique prédisant les prix de l'immobilier avec 95% de précision.",
+      proj2_title: "Application E-Commerce",
+      proj2_tags: "React Native • Firebase",
+      proj2_desc:
+        "Application mobile e-commerce avec inventaire en temps réel et paiement sécurisé.",
+      proj3_title: "Site de Sophrologie",
+      proj3_tags: "Astro • Tailwind CSS",
+      proj3_desc:
+        "Un site web moderne avec prise de rendez-vous et blog pour une sophrologue.",
+      toolbox_title: "Ma Boîte à Outils Numérique",
+      toolbox_desc:
+        "Je choisis le bon outil pour chaque projet. Spécialisé en Python/C pour le backend, j'aime aussi créer de belles interfaces web.",
+      download_cv: "Télécharger CV",
+      skill_python_desc: "Analyse de Données",
+      skill_c_desc: "Programmation Système",
+      skill_design_title: "Design",
+      skill_design_desc: "Prototypage UI/UX",
+      skill_backend_title: "Backend",
+      skill_backend_desc: "SQL & APIs",
+      contact_title: "Prêt à démarrer un projet ?",
+      contact_desc:
+        "Que vous ayez une question ou juste envie de dire bonjour, je vous répondrai au plus vite !",
+      name_placeholder: "Nom",
+      email_placeholder: "Email",
+      subject_placeholder: "Sujet",
+      message_placeholder: "Message",
+      send_message: "Envoyer",
+      footer_crafted: "Créé avec",
+      footer_by: "par",
+    },
+  };
 
-    // Initialize Theme State
+  // 2. Function to update text on the page
+  function applyTranslations(lang: string) {
+    const langKey = lang as keyof typeof translations;
+    const elements = document.querySelectorAll("[data-i18n]");
+    elements.forEach((element) => {
+      const key = element.getAttribute(
+        "data-i18n",
+      ) as keyof (typeof translations)[typeof langKey];
+      if (translations[langKey] && translations[langKey][key]) {
+        (element as HTMLElement).innerText = translations[langKey][key];
+      }
+    });
+
+    const placeholders = document.querySelectorAll("[data-i18n-placeholder]");
+    placeholders.forEach((element) => {
+      const key = element.getAttribute(
+        "data-i18n-placeholder",
+      ) as keyof (typeof translations)[typeof langKey];
+      if (translations[langKey] && translations[langKey][key]) {
+        (element as HTMLInputElement).placeholder = translations[langKey][key];
+      }
+    });
+  }
+
+  // Theme Toggle Logic
+  const themeToggleBtn = document.getElementById("theme-toggle");
+  const toggleCircle = document.getElementById("toggle-circle");
+  const htmlElement = document.documentElement;
+
+  // Initialize Theme State
+  if (htmlElement.classList.contains("dark")) {
+    toggleCircle?.classList.add("translate-x-full");
+  }
+
+  themeToggleBtn?.addEventListener("click", () => {
+    htmlElement.classList.toggle("dark");
     if (htmlElement.classList.contains("dark")) {
-        toggleCircle?.classList.add("translate-x-full");
+      localStorage.setItem("theme", "dark");
+      toggleCircle?.classList.add("translate-x-full");
+    } else {
+      localStorage.setItem("theme", "light");
+      toggleCircle?.classList.remove("translate-x-full");
     }
+  });
 
-    themeToggleBtn?.addEventListener("click", () => {
-        htmlElement.classList.toggle("dark");
-        if (htmlElement.classList.contains("dark")) {
-            localStorage.setItem("theme", "dark");
-            toggleCircle?.classList.add("translate-x-full");
-        } else {
-            localStorage.setItem("theme", "light");
-            toggleCircle?.classList.remove("translate-x-full");
-        }
-    });
+  // Language Toggle Logic
+  const langToggleBtn = document.getElementById("lang-toggle");
+  const langCircle = document.getElementById("lang-circle");
 
-    // Language Toggle Logic
-    const langToggleBtn = document.getElementById("lang-toggle");
-    const langCircle = document.getElementById("lang-circle");
+  // Initialize Language State (Default EN)
+  let currentLang = localStorage.getItem("lang") || "en";
+  if (currentLang === "fr") {
+    langCircle?.classList.add("translate-x-full");
+  }
 
-    // Initialize Language State (Default EN)
-    let currentLang = localStorage.getItem("lang") || "en";
-    if (currentLang === "fr") {
-        langCircle?.classList.add("translate-x-full");
+  // Apply initial translations
+  applyTranslations(currentLang);
+
+  langToggleBtn?.addEventListener("click", () => {
+    if (currentLang === "en") {
+      currentLang = "fr";
+      langCircle?.classList.add("translate-x-full");
+    } else {
+      currentLang = "en";
+      langCircle?.classList.remove("translate-x-full");
     }
-
-    langToggleBtn?.addEventListener("click", () => {
-        if (currentLang === "en") {
-            currentLang = "fr";
-            langCircle?.classList.add("translate-x-full");
-        } else {
-            currentLang = "en";
-            langCircle?.classList.remove("translate-x-full");
-        }
-        localStorage.setItem("lang", currentLang);
-        // Here you would typically trigger a language change event or reload
-        console.log("Language switched to:", currentLang);
-    });
+    localStorage.setItem("lang", currentLang);
+    applyTranslations(currentLang);
+  });
 </script>
