@@ -1,0 +1,596 @@
+---
+// Timeline.astro
+---
+
+<!-- Toggle Button (Expandable Section) -->
+<div class="w-full flex justify-center mt-8 mb-4 transition-all duration-500 z-20 relative" id="timeline-toggle-container">
+  <button
+    id="toggle-timeline-btn"
+    class="px-8 py-3 rounded-full border border-purple-200 dark:border-purple-800/50 bg-transparent text-slate-600 dark:text-slate-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-300 font-medium flex items-center gap-3 group shadow-sm hover:shadow-md"
+  >
+    <span id="toggle-timeline-icon" class="transition-transform duration-300 font-bold group-hover:translate-y-1">↓</span>
+    <span id="toggle-timeline-text">Découvrir mon évolution académique</span>
+  </button>
+</div>
+
+<section
+  id="parcours-detail"
+  class="opacity-0 transition-opacity duration-1000 translate-y-10 scroll-reveal w-full"
+>
+  <div id="timeline-collapsible" class="grid grid-rows-[0fr] opacity-0 transition-all duration-[800ms] ease-in-out w-full">
+    <div class="overflow-hidden">
+      <div class="pt-4 pb-20 px-2">
+  <div class="flex items-end gap-4 mb-12">
+    <h2
+      class="text-6xl md:text-8xl font-serif font-bold text-slate-200 dark:text-slate-800 select-none absolute -z-10"
+      data-i18n="sandbox"
+    >
+      SANDBOX
+    </h2>
+    <h2 class="text-3xl md:text-4xl font-bold pl-2" data-i18n="parcours_title">
+      Parcours & Évolution
+    </h2>
+    <div class="h-px bg-slate-300 grow mb-4 ml-4"></div>
+  </div>
+
+  <div
+    class="bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 md:p-12 border border-slate-100 dark:border-slate-800 shadow-lg relative overflow-hidden timeline-wrapper"
+  >
+    <!-- Dynamic glow background that changes hue with slider -->
+    <div 
+      class="absolute inset-0 pointer-events-none z-0 timeline-glow w-full h-full opacity-0 md:opacity-100 transition-opacity duration-500" 
+      style="--slider-val: 50%; --glow-color: rgba(113, 107, 246, 0.15);"
+      id="timeline-glow-bg"
+    ></div>
+
+    <!-- Filters / Sandbox Controls -->
+    <div
+      class="flex flex-wrap items-center justify-between mb-12 gap-6 relative z-10"
+    >
+      <div class="flex flex-col gap-2 w-full md:w-1/3">
+        <label
+          for="timeline-slider"
+          class="text-sm font-bold text-slate-500 uppercase tracking-wider"
+          >Voyage dans le temps</label
+        >
+        <input
+          type="range"
+          id="timeline-slider"
+          min="0"
+          max="100"
+          value="50"
+          class="w-full accent-purple-500 cursor-pointer"
+        />
+        <div class="flex justify-between text-xs text-slate-400 font-bold">
+          <span>2024 (L1)</span>
+          <span>Aujourd'hui</span>
+          <span>2026 (L2)</span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-sm font-bold transition hover:bg-purple-100 hover:text-purple-700 bg-purple-500 text-white shadow-md active-filter"
+          data-filter="all">Tout</button
+        >
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-sm font-bold transition hover:bg-blue-100 hover:text-blue-700"
+          data-filter="theorie">Théorie</button
+        >
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-sm font-bold transition hover:bg-pink-100 hover:text-pink-700"
+          data-filter="pratique">Pratique</button
+        >
+      </div>
+    </div>
+
+    <!-- Timeline Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 timeline-container"
+    >
+      <!-- L1 Column -->
+      <div
+        class="timeline-col group bg-slate-100 dark:bg-slate-800/50 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:bg-purple-50 dark:hover:bg-purple-900/20 border border-transparent hover:border-purple-200 dark:hover:border-purple-800/50 relative overflow-hidden cursor-default"
+        data-year="2024"
+      >
+        <div
+          class="absolute -right-10 -top-10 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        >
+        </div>
+        <div class="flex items-center gap-4 mb-8 relative z-10">
+          <div
+            class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+          >
+            <i class="fas fa-university"></i>
+          </div>
+          <div>
+            <h3
+              class="text-2xl font-bold group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors"
+            >
+              L1 Informatique
+            </h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">
+              Paris-Saclay • 2024-2025
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-4 relative z-10 relative">
+          <!-- Timeline Line connecting items -->
+          <div
+            class="absolute left-[1.15rem] top-8 bottom-4 w-px bg-purple-200 dark:bg-purple-900/50 -z-10 group-hover:bg-purple-400 transition-colors"
+          >
+          </div>
+
+          <div
+            class="timeline-item items-start gap-4 transition-all duration-300 ease-in-out pl-4 relative"
+            data-type="theorie"
+          >
+            <div
+              class="absolute left-0 top-2 w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]"
+            >
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full border border-slate-100 dark:border-slate-700 group/item relative overflow-hidden"
+            >
+              <i class="fas fa-calculator absolute -right-2 -bottom-2 text-6xl opacity-5 dark:opacity-10 group-hover/item:opacity-20 group-hover/item:text-blue-500 transition-all duration-500 z-0 select-none"></i>
+              <div class="flex justify-between items-start mb-2 relative z-10">
+                <h4 class="font-bold text-slate-800 dark:text-slate-200">
+                  Mathématiques Discrètes
+                </h4>
+                <span
+                  class="text-xs font-bold px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                  >Théorie</span
+                >
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 relative z-10">
+                Logique, graphes et fondements de l'informatique.
+              </p>
+              <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10">
+                <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-3 flex items-center gap-1">
+                  <i class="fas fa-star text-xs"></i> Compétence clé : Pensée analytique
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="timeline-item items-start gap-4 transition-all duration-300 ease-in-out pl-4 relative"
+            data-type="pratique"
+          >
+            <div
+              class="absolute left-0 top-2 w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"
+            >
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full border border-slate-100 dark:border-slate-700 group/item relative overflow-hidden"
+            >
+              <span class="absolute -right-2 -bottom-2 text-6xl font-black font-serif opacity-5 dark:opacity-10 group-hover/item:opacity-20 group-hover/item:text-pink-500 transition-all duration-500 z-0 select-none">C</span>
+              <div class="flex justify-between items-start mb-2 relative z-10">
+                <h4 class="font-bold text-slate-800 dark:text-slate-200">
+                  Programmation C
+                </h4>
+                <span
+                  class="text-xs font-bold px-2 py-1 rounded-full bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300"
+                  >Pratique</span
+                >
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 relative z-10">
+                Pointeurs, allocation mémoire, structures de données.
+              </p>
+              <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10">
+                <p class="text-xs font-semibold text-pink-600 dark:text-pink-400 mt-3 flex items-center gap-1">
+                  <i class="fas fa-star text-xs"></i> Compétence clé : Gestion de la mémoire
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="timeline-item items-start gap-4 transition-all duration-300 ease-in-out pl-4 relative"
+            data-type="pratique"
+          >
+            <div
+              class="absolute left-0 top-2 w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"
+            >
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full border border-slate-100 dark:border-slate-700 group/item relative overflow-hidden"
+            >
+              <i class="fab fa-js absolute -right-2 -bottom-2 text-6xl opacity-5 dark:opacity-10 group-hover/item:opacity-20 group-hover/item:text-pink-500 transition-all duration-500 z-0 select-none"></i>
+              <div class="flex justify-between items-start mb-2 relative z-10">
+                <h4 class="font-bold text-slate-800 dark:text-slate-200">
+                  Projet Web S1
+                </h4>
+                <span
+                  class="text-xs font-bold px-2 py-1 rounded-full bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300"
+                  >Pratique</span
+                >
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 relative z-10">
+                Fondations du développement Web avec HTML, CSS et JavaScript.
+              </p>
+              <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10">
+                <p class="text-xs font-semibold text-pink-600 dark:text-pink-400 mt-3 flex items-center gap-1">
+                  <i class="fas fa-star text-xs"></i> Compétence clé : DOM & Interfaces
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- L2 Column -->
+      <div
+        class="timeline-col group bg-slate-100 dark:bg-slate-800/50 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-transparent hover:border-blue-200 dark:hover:border-blue-800/50 relative overflow-hidden cursor-default"
+        data-year="2025"
+      >
+        <div
+          class="absolute -left-10 -bottom-10 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        >
+        </div>
+        <div class="flex items-center gap-4 mb-8 relative z-10">
+          <div
+            class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 text-2xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+          >
+            <i class="fas fa-code-branch"></i>
+          </div>
+          <div>
+            <h3
+              class="text-2xl font-bold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
+            >
+              L2 Informatique
+            </h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">
+              Paris-Saclay • 2025-2026
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-4 relative z-10 relative">
+          <!-- Timeline Line connecting items -->
+          <div
+            class="absolute left-[1.15rem] top-8 bottom-4 w-px bg-blue-200 dark:bg-blue-900/50 -z-10 group-hover:bg-blue-400 transition-colors"
+          >
+          </div>
+
+          <div
+            class="timeline-item items-start gap-4 transition-all duration-300 ease-in-out pl-4 relative"
+            data-type="theorie"
+          >
+            <div
+              class="absolute left-0 top-2 w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]"
+            >
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full border border-slate-100 dark:border-slate-700 group/item relative overflow-hidden"
+            >
+              <i class="fas fa-project-diagram absolute -right-2 -bottom-2 text-6xl opacity-5 dark:opacity-10 group-hover/item:opacity-20 group-hover/item:text-blue-500 transition-all duration-500 z-0 select-none"></i>
+              <div class="flex justify-between items-start mb-2 relative z-10">
+                <h4 class="font-bold text-slate-800 dark:text-slate-200">
+                  Algorithmique Avancée
+                </h4>
+                <span
+                  class="text-xs font-bold px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                  >Théorie</span
+                >
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 relative z-10">
+                Complexité, apprentissage des arbres de recherche, et graphes
+                avancés.
+              </p>
+              <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10">
+                <p class="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-3 flex items-center gap-1">
+                  <i class="fas fa-star text-xs"></i> Compétence clé : Optimisation de complexité
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="timeline-item items-start gap-4 transition-all duration-300 ease-in-out pl-4 relative"
+            data-type="pratique"
+          >
+            <div
+              class="absolute left-0 top-2 w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"
+            >
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full border border-slate-100 dark:border-slate-700 group/item relative overflow-hidden"
+            >
+              <i class="fab fa-git-alt absolute -right-2 -bottom-2 text-6xl opacity-5 dark:opacity-10 group-hover/item:opacity-20 group-hover/item:text-pink-500 transition-all duration-500 z-0 select-none"></i>
+              <div class="flex justify-between items-start mb-2 relative z-10">
+                <h4 class="font-bold text-slate-800 dark:text-slate-200">
+                  Projet Développement
+                </h4>
+                <span
+                  class="text-xs font-bold px-2 py-1 rounded-full bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300"
+                  >Pratique</span
+                >
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 relative z-10">
+                Architecture logicielle, CI/CD, et collaboration sur GitHub
+                (Git).
+              </p>
+              <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10">
+                <p class="text-xs font-semibold text-pink-600 dark:text-pink-400 mt-3 flex items-center gap-1">
+                  <i class="fas fa-star text-xs"></i> Compétence clé : Travail en équipe (Agile)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="timeline-item items-start gap-4 transition-all duration-300 ease-in-out pl-4 relative"
+            data-type="pratique"
+          >
+            <div
+              class="absolute left-0 top-2 w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"
+            >
+            </div>
+            <div
+              class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all w-full border border-slate-100 dark:border-slate-700 group/item relative overflow-hidden"
+            >
+              <i class="fas fa-database absolute -right-2 -bottom-2 text-6xl opacity-5 dark:opacity-10 group-hover/item:opacity-20 group-hover/item:text-pink-500 transition-all duration-500 z-0 select-none"></i>
+              <div class="flex justify-between items-start mb-2 relative z-10">
+                <h4 class="font-bold text-slate-800 dark:text-slate-200">
+                  Bases de Données
+                </h4>
+                <span
+                  class="text-xs font-bold px-2 py-1 rounded-full bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300"
+                  >Pratique</span
+                >
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 relative z-10">
+                Modélisation UML, conception de schéma SQL, requêtes fluides et
+                optimisation.
+              </p>
+              <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10">
+                <p class="text-xs font-semibold text-pink-600 dark:text-pink-400 mt-3 flex items-center gap-1">
+                  <i class="fas fa-star text-xs"></i> Compétence clé : Requêtes SQL complexes
+                </p>
+              </div>
+            </div>
+
+            <!-- Stage de fin d'année (Future) -->
+            <div
+              class="timeline-item items-start gap-4 transition-all ease-in-out pl-4 relative future-stage overflow-hidden opacity-0 max-h-0 translate-y-4"
+              data-type="pratique"
+              id="stage-card"
+            >
+              <div class="absolute left-0 top-2 w-2 h-2 rounded-full bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]"></div>
+              <div class="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/10 dark:to-orange-900/10 p-4 rounded-xl border border-yellow-200 dark:border-yellow-700/50 w-full group/item relative overflow-hidden flex flex-col justify-center">
+                <i class="fas fa-question text-yellow-500/20 dark:text-yellow-500/10 absolute -right-2 -bottom-6 text-7xl select-none"></i>
+                <div class="flex justify-between items-start mb-2 relative z-10">
+                  <h4 class="font-bold text-yellow-800 dark:text-yellow-200">
+                    Stage de fin d'année
+                  </h4>
+                  <span class="text-xs font-bold px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300">
+                    Futur
+                  </span>
+                </div>
+                <p class="text-sm text-yellow-700/80 dark:text-yellow-300/80 italic relative z-10">
+                  La suite de l'histoire s'écrit avec vous...
+                </p>
+                <div class="overflow-hidden max-h-0 opacity-0 group-hover/item:max-h-20 group-hover/item:opacity-100 transition-all duration-500 relative z-10 border-t border-yellow-200 dark:border-yellow-700/50 pt-2 mt-2">
+                  <p class="text-xs font-semibold text-yellow-700 dark:text-yellow-400 flex items-center gap-2">
+                    <i class="fas fa-search"></i> À la recherche d'une opportunité !
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Filtered out states */
+  .timeline-item.filtered-out {
+    opacity: 0.15;
+    transform: scale(0.95) translateX(10px);
+    pointer-events: none;
+    filter: desaturate(100%);
+  }
+
+  /* Slider focus states */
+  .timeline-col {
+    transition: all 0.5s ease;
+  }
+  .timeline-col.focused {
+    transform: scale(1.02);
+    z-index: 20;
+    box-shadow:
+      0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+  .timeline-col.unfocused {
+    opacity: 0.4;
+    transform: scale(0.98);
+    filter: grayscale(80%);
+  }
+
+  /* "Aujourd'hui" validation effect on L2 */
+  .timeline-col.validating {
+    border-color: rgba(147, 197, 253, 0.5); /* blue-300 transparent */
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.1) inset; /* Soft inner glow */
+    transform: scale(1.01);
+    animation: validate-pulse 3s infinite alternate ease-in-out;
+  }
+  :global(.dark) .timeline-col.validating {
+    border-color: rgba(30, 64, 175, 0.8);
+    box-shadow: 0 0 30px rgba(30, 64, 175, 0.2) inset;
+  }
+  
+  @keyframes validate-pulse {
+    0% { opacity: 0.9; }
+    100% { opacity: 1; }
+  }
+  
+  /* Dynamic slider background glow */
+  .timeline-glow {
+    background: radial-gradient(circle at var(--slider-val, 50%) 50%, var(--glow-color) 0%, transparent 60%);
+    transition: background-color 0.15s ease-out;
+  }
+
+  /* Future Stage Card Animation */
+  #stage-card {
+    transition-property: max-height, opacity, margin-top, transform;
+    transition-duration: 700ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .future-stage.revealed {
+    max-height: 250px;
+    margin-top: 1.5rem;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const slider = document.getElementById("timeline-slider");
+    const cols = document.querySelectorAll(".timeline-col");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const items = document.querySelectorAll(".timeline-item");
+
+    // ----- TOGGLE INTERACTION -----
+    const toggleBtn = document.getElementById("toggle-timeline-btn");
+    const toggleIcon = document.getElementById("toggle-timeline-icon");
+    const toggleText = document.getElementById("toggle-timeline-text");
+    const collapsible = document.getElementById("timeline-collapsible");
+    let isExpanded = false;
+
+    if (toggleBtn && collapsible && toggleText && toggleIcon) {
+      toggleBtn.addEventListener("click", () => {
+        isExpanded = !isExpanded;
+        if (isExpanded) {
+          collapsible.classList.remove("grid-rows-[0fr]", "opacity-0");
+          collapsible.classList.add("grid-rows-[1fr]", "opacity-100");
+          toggleText.textContent = "Masquer le parcours";
+          toggleIcon.textContent = "↑";
+          toggleIcon.classList.remove("group-hover:translate-y-1");
+          toggleIcon.classList.add("group-hover:-translate-y-1");
+        } else {
+          collapsible.classList.remove("grid-rows-[1fr]", "opacity-100");
+          collapsible.classList.add("grid-rows-[0fr]", "opacity-0");
+          toggleText.textContent = "Découvrir mon évolution académique";
+          toggleIcon.textContent = "↓";
+          toggleIcon.classList.remove("group-hover:-translate-y-1");
+          toggleIcon.classList.add("group-hover:translate-y-1");
+          
+          setTimeout(() => {
+             document.getElementById("timeline-toggle-container")?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 800);
+        }
+      });
+    }
+
+    // ----- SLIDER INTERACTION -----
+    const glowBg = document.getElementById("timeline-glow-bg");
+    const stageCard = document.getElementById("stage-card");
+
+    if (slider) {
+      slider.addEventListener("input", (e) => {
+        if (!(e.target instanceof HTMLInputElement)) return;
+        const val = parseInt(e.target.value);
+
+        // Fluid background color transformation: Purple (L1) to Blue (L2)
+        if (glowBg) {
+          glowBg.style.setProperty("--slider-val", `${val}%`);
+          // Purple: 168, 85, 247 | Blue: 59, 130, 246
+          const r = Math.round(168 + (59 - 168) * (val / 100));
+          const g = Math.round(85 + (130 - 85) * (val / 100));
+          const b = Math.round(247 + (246 - 247) * (val / 100));
+          glowBg.style.setProperty("--glow-color", `rgba(${r}, ${g}, ${b}, 0.15)`);
+        }
+
+        // Reveal Future Card if > 90
+        if (stageCard) {
+          if (val > 90) {
+            stageCard.classList.add("revealed", "opacity-100", "translate-y-0");
+            stageCard.classList.remove("opacity-0", "translate-y-4");
+          } else {
+            stageCard.classList.remove("revealed", "opacity-100", "translate-y-0");
+            stageCard.classList.add("opacity-0", "translate-y-4");
+          }
+        }
+
+        cols.forEach((col) => {
+          const year = col.getAttribute("data-year");
+
+          // Reset all dynamic border additions first
+          col.classList.remove("validating", "focused", "unfocused");
+          col.classList.remove("border-purple-200", "dark:border-purple-800/50", "border-blue-200", "dark:border-blue-800/50");
+          col.classList.add("border-transparent");
+
+          if (val < 40) {
+            // Focus on 2024 (L1)
+            if (year === "2024") {
+              col.classList.add("focused", "border-purple-200", "dark:border-purple-800/50");
+              col.classList.remove("border-transparent");
+            } else {
+              col.classList.add("unfocused");
+            }
+          } else if (val > 60) {
+            // Focus on 2025 (L2)
+            if (year === "2025") {
+              col.classList.add("focused", "border-blue-200", "dark:border-blue-800/50");
+              col.classList.remove("border-transparent");
+            } else {
+              col.classList.add("unfocused");
+            }
+          } else {
+            // Center (50) -> Aujourd'hui indicator effect
+            if (year === "2025") {
+              col.classList.add("validating");
+            }
+          }
+        });
+      });
+
+      // Trigger once on load to establish initial state
+      slider.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    // ----- FILTERS INTERACTION -----
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Find current filter
+        const filter = btn.getAttribute("data-filter");
+
+        // Reset styling for all buttons
+        filterBtns.forEach((b) => {
+          b.classList.remove(
+            "bg-purple-500",
+            "text-white",
+            "shadow-md",
+            "active-filter",
+          );
+          b.classList.remove("bg-blue-500", "text-white");
+          b.classList.remove("bg-pink-500", "text-white");
+        });
+
+        // Add proper styling to active button
+        if (filter === "all")
+          btn.classList.add("bg-purple-500", "text-white", "shadow-md");
+        if (filter === "theorie")
+          btn.classList.add("bg-blue-500", "text-white", "shadow-md");
+        if (filter === "pratique")
+          btn.classList.add("bg-pink-500", "text-white", "shadow-md");
+
+        // Animate out items
+        items.forEach((item) => {
+          const itemType = item.getAttribute("data-type");
+          if (filter === "all" || itemType === filter) {
+            item.classList.remove("filtered-out");
+          } else {
+            item.classList.add("filtered-out");
+          }
+        });
+      });
+    });
+  });
+</script>
