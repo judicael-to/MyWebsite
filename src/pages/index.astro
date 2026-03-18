@@ -53,85 +53,7 @@ import Timeline from "../components/Timeline.astro";
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Project 1 -->
-        <div
-          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
-        >
-          <div
-            class="h-64 bg-linear-to-br from-purple-100 to-blue-100 dark:from-slate-700 dark:to-slate-600 p-8 flex items-center justify-center group-hover:scale-105 transition-transform duration-500"
-          >
-            <i class="fas fa-brain text-6xl text-slate-300"></i>
-          </div>
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h3 class="text-2xl font-bold mb-1" data-i18n="proj1_title">
-                  TensorFlow ML Model
-                </h3>
-                <p
-                  class="text-sm text-slate-500 dark:text-slate-400"
-                  data-i18n="proj1_tags"
-                >
-                  Python • TensorFlow • Pandas
-                </p>
-              </div>
-              <a
-                href="#"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
-              >
-                <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-            <p
-              class="text-slate-600 dark:text-slate-300"
-              data-i18n="proj1_desc"
-            >
-              A machine learning model capable of predicting housing prices with
-              95% accuracy using historical data.
-            </p>
-          </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div
-          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
-        >
-          <div
-            class="h-64 bg-linear-to-br from-orange-100 to-red-100 dark:from-slate-700 dark:to-slate-600 p-8 flex items-center justify-center group-hover:scale-105 transition-transform duration-500"
-          >
-            <i class="fas fa-mobile-alt text-6xl text-slate-300"></i>
-          </div>
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h3 class="text-2xl font-bold mb-1" data-i18n="proj2_title">
-                  E-Commerce App
-                </h3>
-                <p
-                  class="text-sm text-slate-500 dark:text-slate-400"
-                  data-i18n="proj2_tags"
-                >
-                  React Native • Firebase
-                </p>
-              </div>
-              <a
-                href="#"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
-              >
-                <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-            <p
-              class="text-slate-600 dark:text-slate-300"
-              data-i18n="proj2_desc"
-            >
-              Full-featured mobile shopping application with real-time inventory
-              and secure payment gateway.
-            </p>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
+        <!-- Project 1: Sophrology Website -->
         <div
           class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
         >
@@ -147,14 +69,101 @@ import Timeline from "../components/Timeline.astro";
           <div class="p-8">
             <div class="flex justify-between items-start mb-4">
               <div>
-                <h3 class="text-2xl font-bold mb-1" data-i18n="proj3_title">
+                <h3 class="text-2xl font-bold mb-1" data-i18n="proj1_title">
                   Sophrology Website
+                </h3>
+                <p
+                  class="text-sm text-slate-500 dark:text-slate-400"
+                  data-i18n="proj1_tags"
+                >
+                  Astro • Tailwind CSS • React
+                </p>
+              </div>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+            <p
+              class="text-slate-600 dark:text-slate-300"
+              data-i18n="proj1_desc"
+            >
+              A modern and serene website featuring responsive design, SEO
+              optimization, and interactive appointment modules.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 2: Group Management App -->
+        <div
+          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
+        >
+          <div
+            class="h-64 bg-slate-100 dark:bg-slate-700 relative overflow-hidden group-hover:scale-105 transition-transform duration-500"
+          >
+            <img
+              src="/tptd.png"
+              alt="Group Management App Demo"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-2xl font-bold mb-1" data-i18n="proj2_title">
+                  Group Management App
+                </h3>
+                <p
+                  class="text-sm text-slate-500 dark:text-slate-400"
+                  data-i18n="proj2_tags"
+                >
+                  MySQL • Java • PHP • API REST
+                </p>
+              </div>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+            <p
+              class="text-slate-600 dark:text-slate-300"
+              data-i18n="proj2_desc"
+            >
+              Database design and load balancing algorithms with interactive
+              dashboards for data visualization.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 3: Cité universitaire App -->
+        <div
+          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
+        >
+          <div
+            class="h-64 bg-slate-100 dark:bg-slate-700 relative overflow-hidden group-hover:scale-105 transition-transform duration-500"
+          >
+            <!-- Placeholder icon for image -->
+            <img
+              src="/citeU.png"
+              alt="cité universitaire"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-2xl font-bold mb-1" data-i18n="proj3_title">
+                  Dormitory Management App
                 </h3>
                 <p
                   class="text-sm text-slate-500 dark:text-slate-400"
                   data-i18n="proj3_tags"
                 >
-                  Astro • Tailwind CSS
+                  Java • Penpot
                 </p>
               </div>
               <a
@@ -168,8 +177,132 @@ import Timeline from "../components/Timeline.astro";
               class="text-slate-600 dark:text-slate-300"
               data-i18n="proj3_desc"
             >
-              A modern and serene website for a sophrology practitioner,
-              featuring appointment booking and blog integration.
+              Object-oriented management application focusing on robust software
+              architecture and intuitive UI.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 4: Network Infrastructure -->
+        <div
+          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
+        >
+          <div
+            class="h-64 bg-linear-to-br from-green-100 to-emerald-100 dark:from-slate-700 dark:to-slate-600 p-8 flex items-center justify-center group-hover:scale-105 transition-transform duration-500"
+          >
+            <!-- Placeholder icon for image -->
+            <i
+              class="fas fa-network-wired text-6xl text-slate-300 dark:text-slate-500"
+            ></i>
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-2xl font-bold mb-1" data-i18n="proj4_title">
+                  Network Infrastructure
+                </h3>
+                <p
+                  class="text-sm text-slate-500 dark:text-slate-400"
+                  data-i18n="proj4_tags"
+                >
+                  SSH • Routing
+                </p>
+              </div>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+            <p
+              class="text-slate-600 dark:text-slate-300"
+              data-i18n="proj4_desc"
+            >
+              Multi-team network setup applying system administration concepts,
+              routing tables, and secure remote access.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 5: 2D Video Game -->
+        <div
+          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
+        >
+          <div
+            class="h-64 bg-slate-100 dark:bg-slate-700 relative overflow-hidden group-hover:scale-105 transition-transform duration-500"
+          >
+            <!-- Placeholder icon for image -->
+            <img src="/2d.png" alt="Game" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-2xl font-bold mb-1" data-i18n="proj5_title">
+                  2D Video Game
+                </h3>
+                <p
+                  class="text-sm text-slate-500 dark:text-slate-400"
+                  data-i18n="proj5_tags"
+                >
+                  C++ • SDL2
+                </p>
+              </div>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+            <p
+              class="text-slate-600 dark:text-slate-300"
+              data-i18n="proj5_desc"
+            >
+              Developed a video game using a custom engine managing levels,
+              characters, and interactions.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 6: Database Design -->
+        <div
+          class="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700"
+        >
+          <div
+            class="h-64 bg-linear-to-br from-amber-100 to-yellow-100 dark:from-slate-700 dark:to-slate-600 p-8 flex items-center justify-center group-hover:scale-105 transition-transform duration-500"
+          >
+            <!-- Placeholder icon for image -->
+            <i
+              class="fas fa-database text-6xl text-slate-300 dark:text-slate-500"
+            ></i>
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-2xl font-bold mb-1" data-i18n="proj6_title">
+                  Database Design
+                </h3>
+                <p
+                  class="text-sm text-slate-500 dark:text-slate-400"
+                  data-i18n="proj6_tags"
+                >
+                  SQL • UML
+                </p>
+              </div>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-colors"
+              >
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+            <p
+              class="text-slate-600 dark:text-slate-300"
+              data-i18n="proj6_desc"
+            >
+              UML modeling and complex SQL scripts (Triggers, Stored Procedures)
+              optimizing large data volumes.
             </p>
           </div>
         </div>
@@ -194,7 +327,7 @@ import Timeline from "../components/Timeline.astro";
         </div>
 
         <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
+          <div class="flex flex-col justify-center">
             <h2
               class="text-3xl md:text-5xl font-serif font-bold mb-6"
               data-i18n="toolbox_title"
@@ -212,7 +345,7 @@ import Timeline from "../components/Timeline.astro";
             <a
               href="/CV.pdf"
               download
-              class="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-slate-200 transition-colors"
+              class="inline-block bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-slate-200 transition-colors w-fit"
               data-i18n="download_cv"
             >
               Download CV
@@ -249,6 +382,24 @@ import Timeline from "../components/Timeline.astro";
               </h4>
               <p class="text-sm text-slate-400" data-i18n="skill_backend_desc">
                 SQL & APIs
+              </p>
+            </div>
+            <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+              <i class="fas fa-users text-4xl text-orange-300 mb-4"></i>
+              <h4 class="font-bold text-xl" data-i18n="skill_soft_title">
+                Soft Skills
+              </h4>
+              <p class="text-sm text-slate-400" data-i18n="skill_soft_desc">
+                Analysis & Rigor
+              </p>
+            </div>
+            <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-sm">
+              <i class="fas fa-language text-4xl text-sky-300 mb-4"></i>
+              <h4 class="font-bold text-xl" data-i18n="skill_lang_title">
+                Languages
+              </h4>
+              <p class="text-sm text-slate-400" data-i18n="skill_lang_desc">
+                French & English
               </p>
             </div>
           </div>
